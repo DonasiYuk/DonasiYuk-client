@@ -18,10 +18,10 @@ export default function App() {
     <Provider store={store}>
       <NavigationContainer>
         <Stack.Navigator>
-          {/* <Stack.Screen name="Login" component={Login} />
-          <Stack.Screen name="Register" component={Register} /> */}
+          <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name="Register" component={Register} />
           <Stack.Screen name="Create" component={Create} />
-          {/* <Stack.Screen name="Edit" component={Edit} /> */}
+          <Stack.Screen name="Edit" component={Edit} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
