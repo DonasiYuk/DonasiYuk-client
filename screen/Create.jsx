@@ -5,7 +5,6 @@ import Upload from "../components/Upload"
 import { actionCreate } from '../stores/actions/actionDonation'
 
 export default function Create() {
-    const test = useSelector(state => state)
     const dispatch = useDispatch()
     const [payload, setPayload] = useState({})
 
@@ -13,8 +12,13 @@ export default function Create() {
         dispatch(actionCreate(data))
     }
 
+    function getImage(image){
+        setPayload({...payload, imgUrl : image})
+    }
+
     return (
         <ScrollView>
+            <Text>{JSON.stringify(payload)}</Text>
             <Text style={styles.text}>Title</Text>
             <TextInput style={styles.input}
                 onChangeText={(text) => setPayload({ ...payload, username: text })}
@@ -40,7 +44,9 @@ export default function Create() {
                 onChangeText={(text) => setPayload({ ...payload, balance: text })}
                 name="balance"
                 placeholder="Balance" />
-            <Upload/>
+            <Upload
+                sendData={getImage}
+            />
             <Button
                 title="Submit"
                 onPress={() => sendData(payload)}

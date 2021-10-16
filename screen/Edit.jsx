@@ -12,6 +12,10 @@ export default function Edit() {
         dispatch(actionCreate(data))
     }
 
+    function getImage(image){
+        setPayload({...payload, imgUrl : image})
+    }
+
     return (
         <ScrollView>
             <Text style={styles.text}>Title</Text>
@@ -39,7 +43,9 @@ export default function Edit() {
                 onChangeText={(text) => setPayload({ ...payload, balance: text })}
                 name="balance"
                 placeholder="Balance" />
-            <Upload/>
+            <Upload
+                sendData={getImage}
+            />
             <Button
                 title="Submit"
                 onPress={() => sendData(payload)}
