@@ -49,6 +49,9 @@ export default function Login({ navigation }) {
             <Pressable onPress={()=> navigation.navigate('Register')}>
                 <Text>Sign Up</Text>
             </Pressable>
+            <Pressable onPress={()=> navigation.navigate('DonasiSaya')}>
+                <Text>Donasi Saya</Text>
+            </Pressable>
         </View>
     );
 
