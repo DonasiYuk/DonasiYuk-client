@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { useDispatch, useSelector } from "react-redux";
+import axios from 'axios';
 import { fetchUserDonations } from "../stores/actions/actionDonasiSaya";
 
 export default function DonasiSaya({ navigation }) {
@@ -17,19 +18,20 @@ export default function DonasiSaya({ navigation }) {
     const [modalVisible, setModalVisible] = useState(false);
     const [donationId, setDonationId] = useState(null);
     const access_token = useSelector(state => state.access_token);
+    const userDonations = useSelector(state => state.userDonations);
 
     useEffect(() => {
         dispatch(fetchUserDonations(access_token))
     }, [dispatch])
 
     function withdraw() {
-        axios.put(`http://localhost:3000/withdraw/${donationId}`, {
-            headers: {
-                access_token
-            }
+        axios({
+            url: `http://192.168.1.2:3000/withdraw/${donationId}`,
+            method: 'put',
+            headers: { access_token }
         })
             .then(res => {
-                console.log(res.data);
+                // console.log(res.data);
             })
             .catch(err => console.log(err))
     }
@@ -57,7 +59,11 @@ export default function DonasiSaya({ navigation }) {
                             </Pressable>
                             <Pressable
                                 style={[styles.button, styles.buttonClose]}
-                                onPress={() => withdraw()}
+                                onPress={async () => {
+                                    withdraw()
+                                    dispatch(fetchUserDonations(access_token))
+                                    setModalVisible(!modalVisible)
+                                }}
                             >
                                 <Text style={styles.textStyle}>jadiin lah</Text>
                             </Pressable>
@@ -67,46 +73,34 @@ export default function DonasiSaya({ navigation }) {
             </Modal>
 
             <StatusBar style="auto" />
-            {/* <Text>INI SCREEN DONASI SAYA</Text> */}
-            {/* <FlatList 
-                data={jobs.jobs}
-                renderItem={({ item }) => (   */}
-            <View style={styles.card}>
-                <Text style={styles.title}>ini judul donasi</Text>
-                <Text style={{ marginBottom: 10 }}>Nama User atau Yayasan</Text>
-                <Text style={{ textAlign: "left" }}>Terkumpul</Text>
-                <View style={{ flexDirection: "row" }}>
-                    <Text style={{ textAlign: "left", fontWeight: "bold" }}>
-                        Rp.500.000.000,00
-                    </Text>
-                    <Text style={{ marginLeft: "auto" }}>ini status</Text>
-                </View>
-                <Pressable
-                    style={[styles.button, styles.buttonOpen]}
-                    onPress={() => {
-                        setDonationId(1)
-                        setModalVisible(true)
-                    }}
-                >
-                    <Text style={styles.textStyle}>Withdraw</Text>
-                </Pressable>
-                {/* 
-                    INI BUAT CONDITIONAL BUTTON WITHDRAW
-                    {
-                    item.status === 'incomplete' ? <Pressable
-                        style={[styles.button, styles.buttonOpen]}
-                        onPress={() => {
-                            setDonationId(1)
-                            setModalVisible(true)
-                        }}
-                    >
-                        <Text style={styles.textStyle}>Withdraw</Text>
-                    </Pressable> : null
-                } */}
-            </View>
-            {/* //     )}
-            //     keyExtractor={}
-            // /> */}
+            <FlatList 
+                data={userDonations}
+                renderItem={({ item }) => (  
+                    <View style={styles.card}>
+                        <Text style={styles.title}>{item.title}</Text>
+                        <Text style={{ marginBottom: 10 }}>{item.User.username}</Text>
+                        <Text style={{ textAlign: "left" }}>Terkumpul</Text>
+                        <View style={{ flexDirection: "row" }}>
+                            <Text style={{ textAlign: "left", fontWeight: "bold" }}>
+                                Rp.{item.balance},00 
+                            </Text>
+                            <Text style={{ marginLeft: "auto" }}>{item.status}</Text>
+                        </View>
+                        {
+                            item.status === 'incomplete' ? <Pressable
+                                style={[styles.button, styles.buttonOpen]}
+                                onPress={() => {
+                                    setDonationId(1)
+                                    setModalVisible(true)
+                                }}
+                            >
+                                <Text style={styles.textStyle}>Withdraw</Text>
+                            </Pressable> : null
+                        }
+                    </View>
+                )}
+                keyExtractor={item => item.id}
+            />
         </View>
     );
 }
