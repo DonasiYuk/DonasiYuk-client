@@ -6,6 +6,8 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import Login from './screen/Login';
 import Register from './screen/Register';
+import Create from "./screen/Create";
+import Edit from "./screen/Edit";
 import store from './stores';
 
 export default function App() {
@@ -18,6 +20,8 @@ export default function App() {
         <Stack.Navigator>
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="Register" component={Register} />
+          <Stack.Screen name="Create" component={Create} />
+          <Stack.Screen name="Edit" component={Edit} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
