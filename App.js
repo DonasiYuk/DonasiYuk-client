@@ -9,6 +9,7 @@ import Register from './screen/Register';
 import Create from "./screen/Create";
 import Edit from "./screen/Edit";
 import store from './stores';
+import DonasiSaya from './screen/DonasiSaya';
 
 export default function App() {
 
@@ -22,6 +23,7 @@ export default function App() {
           <Stack.Screen name="Register" component={Register} />
           <Stack.Screen name="Create" component={Create} />
           <Stack.Screen name="Edit" component={Edit} />
+          <Stack.Screen name="DonasiSaya" component={DonasiSaya} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

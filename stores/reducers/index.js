@@ -3,11 +3,13 @@ import {
     SETTOKEN,
     SETPAYLOADCREATE
 } from '../actionType'
+import { SETDONATIONS,SETTOKEN, SET_USER_DONATIONS } from '../actionType'
 
 const initialState = {
     donations: [],
     access_token: "",
     payloadCreate : {}
+    userDonations: []
 }
 
 function reducer(state = initialState, action) {
@@ -21,6 +23,8 @@ function reducer(state = initialState, action) {
                 ...state,
                 payloadCreate : action.payload
             }
+        case SET_USER_DONATIONS:
+            return { ...state, userDonations: action.payload }
         default:
             return state
     }
