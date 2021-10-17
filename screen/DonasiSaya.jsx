@@ -6,6 +6,7 @@ import {
     Text,
     Modal,
     Pressable,
+    Button
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { useDispatch, useSelector } from "react-redux";
@@ -90,6 +91,14 @@ export default function DonasiSaya({ navigation }) {
                 >
                     <Text style={styles.textStyle}>Withdraw</Text>
                 </Pressable>
+                <Pressable
+                    style={[styles.button, styles.buttonOpen]}
+                    onPress={()=> navigation.navigate('ReportForm')}
+                >
+                    <Text style={styles.textStyle}>Send Report</Text>
+                </Pressable>
+                
+                
                 {/* 
                     INI BUAT CONDITIONAL BUTTON WITHDRAW
                     {

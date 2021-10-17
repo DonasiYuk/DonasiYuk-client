@@ -8,6 +8,7 @@ import Login from './screen/Login';
 import Register from './screen/Register';
 import store from './stores';
 import DonasiSaya from './screen/DonasiSaya';
+import ReportForm from './screen/ReportForm'
 
 export default function App() {
 
@@ -20,6 +21,7 @@ export default function App() {
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="Register" component={Register} />
           <Stack.Screen name="DonasiSaya" component={DonasiSaya} />
+          <Stack.Screen name="ReportForm" component={ReportForm} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
