@@ -3,15 +3,19 @@ import { View, StyleSheet, Image, SafeAreaView, FlatList, Text, Pressable, Touch
 import { SearchBar } from 'react-native-elements'
 import { useDispatch, useSelector } from 'react-redux'
 import { setDonationsAsync } from '../stores/actions/actionDonation'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 
-export default function DonationList({navigation}) {
+import DonasiSaya from "./DonasiSaya";
+import Create from "./Create";
+
+function DonationList({ navigation }) {
     const dispatch = useDispatch()
     const donations = useSelector(state => state.donations)
-    
 
-    useEffect(()=>{
+
+    useEffect(() => {
         dispatch(setDonationsAsync())
-    },[dispatch])
+    }, [dispatch])
 
     console.log(donations);
     return (
@@ -23,30 +27,43 @@ export default function DonationList({navigation}) {
             </View>
             <FlatList
                 data={donations}
-                renderItem={({item})=>(
-                    <TouchableOpacity onPress={()=>{
-                        navigation.navigate('Detail',{  
-                            id:item.id
+                renderItem={({ item }) => (
+                    <TouchableOpacity onPress={() => {
+                        navigation.navigate('Detail', {
+                            id: item.id
                         })
                     }}>
 
-                    <View style={styles.card}>
-                        <Text style={styles.title}>{item.title}</Text>
-                        <Text style={{ textAlign: "left" }}>Terkumpul</Text>
-                        <View style={{ flexDirection: "row" }}>
-                            <Text style={{ textAlign: "left", fontWeight: "bold" }}>
-                                Rp.{item.balance},00 
-                            </Text>
-                            <Text style={{ marginLeft: "auto" }}>{item.status}</Text>
+                        <View style={styles.card}>
+                            <Text style={styles.title}>{item.title}</Text>
+                            <Text style={{ textAlign: "left" }}>Terkumpul</Text>
+                            <View style={{ flexDirection: "row" }}>
+                                <Text style={{ textAlign: "left", fontWeight: "bold" }}>
+                                    Rp.{item.balance},00
+                                </Text>
+                                <Text style={{ marginLeft: "auto" }}>{item.status}</Text>
+                            </View>
                         </View>
-                    </View>
                     </TouchableOpacity>
-                )} 
+                )}
                 keyExtractor={item => item.id}
             />
         </SafeAreaView>
     )
 }
+
+
+export default function HomePage() {
+    const Tab = createBottomTabNavigator()
+    return(
+        <Tab.Navigator>
+            <Tab.Screen name="DonationList" component={DonationList}/>
+            <Tab.Screen name="DonasiSaya" component={DonasiSaya}/>
+            <Tab.Screen name="Create" component={Create}/>
+        </Tab.Navigator>
+    )
+}
+
 
 const styles = StyleSheet.create({
     container: {
