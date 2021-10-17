@@ -11,7 +11,7 @@ export function setLogin(token) {
 }
 
 export function actionLogin(data) {
-    return function (dispatch) {
+    return function () {
         return axios({
             url: `${baseUrl}/users/login`,
             method: 'post',

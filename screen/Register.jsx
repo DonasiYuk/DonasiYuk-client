@@ -1,14 +1,31 @@
 import React, { useState } from "react"
 import { useDispatch } from "react-redux"
 import { View, Text, TextInput, Pressable, StyleSheet } from "react-native"
+import { register } from '../stores/actions/actionRegister'
 
-export default function Register() {
+export default function Register({navigation}) {
     const dispatch = useDispatch()
     const [username, onChangeUsername] = useState("")
     const [email, onChangeEmail] = useState("")
     const [password, onChangePassword] = useState("")
     const [phoneNumber, onChangePhoneNumber] = useState("")
     const [address, onChangeAddress] = useState("")
+
+    function registerBtn() {
+        dispatch(register({
+            username,
+            email,
+            password,
+            phoneNumber,
+            address
+        }))
+        .then(()=>{
+            navigation.navigate('Login')
+        })
+        .catch((err)=>{
+            console.log(err)
+        })
+    }
 
     return (
         <View>
@@ -18,26 +35,26 @@ export default function Register() {
                 value={username}
                 placeholder="username" />
             <Text>Email</Text>
-            <TextInput style={styles.input} 
-            onChangeText={onChangeEmail}
+            <TextInput style={styles.input}
+                onChangeText={onChangeEmail}
                 value={email}
                 placeholder="email" />
             <Text>Password</Text>
-            <TextInput style={styles.input} 
-            onChangeText={onChangePassword}
+            <TextInput style={styles.input}
+                onChangeText={onChangePassword}
                 value={password}
                 placeholder="password" />
             <Text>Phone Number</Text>
-            <TextInput style={styles.input} 
-            onChangeText={onChangePhoneNumber}
+            <TextInput style={styles.input}
+                onChangeText={onChangePhoneNumber}
                 value={phoneNumber}
                 placeholder="phone number" />
             <Text>Address</Text>
-            <TextInput style={styles.input} 
-            onChangeText={onChangeAddress}
+            <TextInput style={styles.input}
+                onChangeText={onChangeAddress}
                 value={address}
                 placeholder="address" />
-            <Pressable style={styles.submitBtn}>
+            <Pressable style={styles.submitBtn} onPress={registerBtn}>
                 <Text>Submit</Text>
             </Pressable>
         </View>
@@ -61,6 +78,8 @@ const styles = StyleSheet.create({
     },
     submitBtn: {
         borderWidth: 1,
-        borderRadius: 30
+        borderRadius: 30,
+        height: 30,
+        width: 350
     }
 });

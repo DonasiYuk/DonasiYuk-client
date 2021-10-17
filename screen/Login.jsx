@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { TextInput, View, Text, Pressable, StyleSheet } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import { actionLogin, setLogin } from '../stores/actions/actionLogin'
@@ -10,14 +10,23 @@ export default function Login({ navigation }) {
     const [password, onChangePassword] = useState("")
 
     function loginBtn() {
+        // useEffect(()=>{
+        //     dispatch()
+        // })
 
         dispatch(actionLogin({
             email,
             password
         }))
-        .then((res)=>{
+        .then((res) => {
             dispatch(setLogin(res.data.access_token))
-            navigation.navigate('Register')
+            navigation.navigate('ListDonasi')
+            navigation.reset({
+                index: 0,
+                routes: [
+                    { name: 'ListDonasi' },
+                ],
+            })// prevent back
         })
         .catch((err)=>{
             console.log(err.message);
