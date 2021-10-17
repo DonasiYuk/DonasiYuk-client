@@ -11,6 +11,7 @@ import Edit from "./screen/Edit";
 import store from './stores';
 import DonasiSaya from './screen/DonasiSaya';
 import DonationList from './screen/DonationList';
+import ReportForm from './screen/ReportForm'
 
 export default function App() {
 
@@ -26,6 +27,7 @@ export default function App() {
           <Stack.Screen name="Edit" component={Edit} />
           <Stack.Screen name="DonasiSaya" component={DonasiSaya} />
           <Stack.Screen name="ListDonasi" component={DonationList}/>
+          <Stack.Screen name="ReportForm" component={ReportForm} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
