@@ -13,6 +13,7 @@ import DonasiSaya from './screen/DonasiSaya';
 import DonationList from './screen/DonationList';
 import ReportForm from './screen/ReportForm'
 import DetailPage from './screen/Detail';
+import HistoryTransaction from './screen/HistoryTransaction';
 
 export default function App() {
 
@@ -22,14 +23,15 @@ export default function App() {
     <Provider store={store}>
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen name="Login" component={Login} />
-          <Stack.Screen name="Register" component={Register} />
-          <Stack.Screen name="Create" component={Create} />
-          <Stack.Screen name="Edit" component={Edit} />
+          {/* <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name="Register" component={Register} /> */}
+          <Stack.Screen name="Create" component={Create} options={{ headerStyle: { backgroundColor: '#3DB2FF' }, headerTitleStyle: { color: 'white' }}} />
+          {/* <Stack.Screen name="Edit" component={Edit} />
           <Stack.Screen name="DonasiSaya" component={DonasiSaya} />
           <Stack.Screen name="ListDonasi" component={DonationList} options={{ headerShown: false }}/>
           <Stack.Screen name="ReportForm" component={ReportForm} />
-          <Stack.Screen name="DetaiPage" component={DetailPage}/>
+          <Stack.Screen name="DetaiPage" component={DetailPage}/> */}
+          {/* <Stack.Screen name="History Transaction" component={HistoryTransaction} options={{ headerStyle: { backgroundColor: '#3DB2FF' }, headerTitleStyle: { color: 'white' }}} /> */}
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

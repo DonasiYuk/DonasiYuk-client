@@ -14,8 +14,8 @@ export function setCreate(payload) {
 }
 
 export function actionCreate(data) {
-    return dispatch => {
-        dispatch(setCreate(data))
+    return function (dispatch) {
+        console.log(data);
     }
 }
 

@@ -40,6 +40,7 @@ export default function Report() {
         setImage(result.uri)
         setLocalUri(result.uri)
         setFilename(localUri.split('/').pop())
+        console.log(match, '<<<<<<<<<');
         let getType = match ? `image/${match[1]}` : `image`;
         setType(getType)
       }
@@ -57,7 +58,6 @@ export default function Report() {
         formData.append('description', { uri: localUri, name: filename, type });
 
     }
-
 
     return (
       
