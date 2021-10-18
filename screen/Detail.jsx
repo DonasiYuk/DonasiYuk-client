@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Text, ScrollView, Image, View, StyleSheet } from "react-native"
 import Maps from '../components/Maps'
+import axios from 'axios'
 
 export default function DetailPage() {
     return (
