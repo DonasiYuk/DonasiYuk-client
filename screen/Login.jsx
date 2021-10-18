@@ -20,11 +20,11 @@ export default function Login({ navigation }) {
         }))
         .then((res) => {
             dispatch(setLogin(res.data.access_token))
-            navigation.navigate('HomePage')
+            navigation.navigate('ListDonasi')
             navigation.reset({
                 index: 0,
                 routes: [
-                    { name: 'HomePage' },
+                    { name: 'ListDonasi' },
                 ],
             })// prevent back
         })

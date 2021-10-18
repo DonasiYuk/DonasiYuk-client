@@ -1,33 +1,34 @@
 import React, { useEffect, useState } from "react";
 import { View } from 'react-native'
 import MapView from 'react-native-maps';
-import { Marker } from 'react-native-maps'
+import { Marker } from 'react-native-maps';
+import { useSelector } from "react-redux";
 import * as Location from 'expo-location';
 
 export default function Maps() {
+    const detailDonation = useSelector(state => state.detailDonation)
+    // const [dataMaps, setDataMaps] = useState()
 
-    const [dataMaps, setDataMaps] = useState()
+    // const [location, setLocation] = useState(null);
+    // // console.log(location);
+    // useEffect(() => {
+    //     (async () => {
+    //         let { status } = await Location.requestForegroundPermissionsAsync();
+    //         if (status !== 'granted') {
+    //         setErrorMsg('Permission to access location was denied');
+    //         return;
+    //         }
 
-    const [location, setLocation] = useState(null);
-    // console.log(location);
-    useEffect(() => {
-        (async () => {
-            let { status } = await Location.requestForegroundPermissionsAsync();
-            if (status !== 'granted') {
-            setErrorMsg('Permission to access location was denied');
-            return;
-            }
-
-            let location = await Location.getCurrentPositionAsync({});
-            setLocation(location);
-        })();
-    }, []);
-
+    //         let location = await Location.getCurrentPositionAsync({});
+    //         setLocation(location);
+    //     })();
+    // }, []);
+    // console.log(detailDonation);
     const getInitialState = () => {
         return {
             region: {
-                latitude: location?.coords.latitude,
-                longitude: location?.coords.longitude,
+                latitude: detailDonation.lat,
+                longitude: detailDonation.long,
                 latitudeDelta: 0.0922,
                 longitudeDelta: 0.0421,
             },
@@ -61,12 +62,12 @@ export default function Maps() {
                         height: 300
                     }}
                     region={getInitialState().region}
-                    onRegionChange={onRegionChange}
+                    // onRegionChange={onRegionChange}
                 >
                     <Marker
                         coordinate={{
-                            latitude: location?.coords.latitude,
-                            longitude: location?.coords.longitude,
+                            latitude: detailDonation.lat,
+                            longitude: detailDonation.long,
                         }}
                     />
                 </MapView>

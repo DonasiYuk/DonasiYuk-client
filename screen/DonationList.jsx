@@ -17,7 +17,7 @@ function DonationList({ navigation }) {
         dispatch(setDonationsAsync())
     }, [dispatch])
 
-    console.log(donations);
+
     return (
         <SafeAreaView style={styles.container}>
             <View >
@@ -29,7 +29,7 @@ function DonationList({ navigation }) {
                 data={donations}
                 renderItem={({ item }) => (
                     <TouchableOpacity onPress={() => {
-                        navigation.navigate('Detail', {
+                        navigation.navigate('DetaiPage', {
                             id: item.id
                         })
                     }}>

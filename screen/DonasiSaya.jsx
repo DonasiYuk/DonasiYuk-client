@@ -26,12 +26,12 @@ export default function DonasiSaya({ navigation }) {
 
     function withdraw() {
         axios({
-            url: `http://10.0.2.2:3000/withdraw/${donationId}`,
+            url: `http://192.168.1.2:3000/withdraw/${donationId}`,
             method: 'put',
             headers: { access_token }
         })
             .then(res => {
-                console.log(res.data);
+                // console.log(res.data);
             })
             .catch(err => console.log(err))
     }
@@ -95,14 +95,13 @@ export default function DonasiSaya({ navigation }) {
                                 }}
                             >
                                 <Text style={styles.textStyle}>Withdraw</Text>
-                            </Pressable> : null
+                            </Pressable> : <Pressable
+                                style={[styles.button, styles.buttonOpen]}
+                                onPress={()=> navigation.navigate('ReportForm')}
+                            >
+                                <Text style={styles.textStyle}>Send Report</Text>
+                            </Pressable>
                         }
-                        <Pressable
-                            style={[styles.button, styles.buttonOpen]}
-                            onPress={()=> navigation.navigate('ReportForm')}
-                        >
-                            <Text style={styles.textStyle}>Send Report</Text>
-                        </Pressable>
                     </View>
                 )}
                 keyExtractor={item => item.id}
@@ -116,6 +115,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: "center",
         backgroundColor: "#fff",
+        padding: 10
         //   justifyContent: 'center',
     },
     card: {
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         marginTop: 10,
         marginBottom: 10,
-        height: 170,
+        height: 200,
         width: 350,
         borderRadius: 10,
         backgroundColor: "#fff",
