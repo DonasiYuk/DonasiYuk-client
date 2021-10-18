@@ -10,7 +10,9 @@ import Create from "./screen/Create";
 import Edit from "./screen/Edit";
 import store from './stores';
 import DonasiSaya from './screen/DonasiSaya';
-import HomePage from './screen/DonationList';
+import DonationList from './screen/DonationList';
+import ReportForm from './screen/ReportForm'
+import DetailPage from './screen/Detail';
 
 export default function App() {
 
@@ -24,8 +26,10 @@ export default function App() {
           <Stack.Screen name="Register" component={Register} />
           <Stack.Screen name="Create" component={Create} />
           <Stack.Screen name="Edit" component={Edit} />
-          {/* <Stack.Screen name="DonasiSaya" component={DonasiSaya} /> */}
-          <Stack.Screen options={{ headerShown: false }} name="HomePage" component={HomePage}/>
+          <Stack.Screen name="DonasiSaya" component={DonasiSaya} />
+          <Stack.Screen name="ListDonasi" component={DonationList}/>
+          <Stack.Screen name="ReportForm" component={ReportForm} />
+          <Stack.Screen name="DetaiPage" component={DetailPage}/>
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
