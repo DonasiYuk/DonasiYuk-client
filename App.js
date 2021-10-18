@@ -12,6 +12,7 @@ import store from './stores';
 import DonasiSaya from './screen/DonasiSaya';
 import DonationList from './screen/DonationList';
 import ReportForm from './screen/ReportForm'
+import DetailPage from './screen/Detail';
 
 export default function App() {
 
@@ -21,13 +22,14 @@ export default function App() {
     <Provider store={store}>
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen name="Login" component={Login} />
+          {/* <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="Register" component={Register} />
           <Stack.Screen name="Create" component={Create} />
           <Stack.Screen name="Edit" component={Edit} />
           <Stack.Screen name="DonasiSaya" component={DonasiSaya} />
           <Stack.Screen name="ListDonasi" component={DonationList}/>
-          <Stack.Screen name="ReportForm" component={ReportForm} />
+          <Stack.Screen name="ReportForm" component={ReportForm} /> */}
+          <Stack.Screen name="DetaiPage" component={DetailPage}/>
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
