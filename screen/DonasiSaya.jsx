@@ -31,7 +31,7 @@ export default function DonasiSaya({ navigation }) {
             headers: { access_token }
         })
             .then(res => {
-                // console.log(res.data);
+                console.log(res.data);
             })
             .catch(err => console.log(err))
     }
