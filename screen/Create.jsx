@@ -1,12 +1,26 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { useDispatch,useSelector } from "react-redux"
 import { ScrollView, Text, TextInput, StyleSheet, Button } from "react-native"
+import * as Location from 'expo-location';
 import Upload from "../components/Upload"
 import { actionCreate } from '../stores/actions/actionDonation'
 
 export default function Create() {
     const dispatch = useDispatch()
     const [payload, setPayload] = useState({})
+
+    useEffect(() => {
+        (async () => {
+            let { status } = await Location.requestForegroundPermissionsAsync();
+            if (status !== 'granted') {
+                setErrorMsg('Permission to access location was denied');
+                return;
+            }
+
+            let location = await Location.getCurrentPositionAsync({});
+            setPayload({ ...payload, lat: location.coords.latitude, long: location.coords.longitude });
+        })();
+    }, []);
 
     function sendData(data) {
         dispatch(actionCreate(data))
@@ -34,11 +48,6 @@ export default function Create() {
                 onChangeText={(text) => setPayload({ ...payload, targetAmount: text })}
                 name="targetAmount"
                 placeholder="Target Amount" />
-            <Text style={styles.text}>LAT LONG MAP</Text>
-            <TextInput style={styles.input}
-                onChangeText={(text) => setPayload({ ...payload, latlong: text })}
-                name="latlong"
-                placeholder="LAT LONG MAP" />
             <Text style={styles.text}>Balance</Text>
             <TextInput style={styles.input}
                 onChangeText={(text) => setPayload({ ...payload, balance: text })}

@@ -1,19 +1,30 @@
-import React from "react";
-import { Text, ScrollView, Image, View, StyleSheet } from "react-native"
+import React, { useEffect, useState } from "react";
+import { Text, ScrollView, Image, View, StyleSheet, Pressable } from "react-native"
 import Maps from '../components/Maps'
+import { useDispatch, useSelector } from "react-redux";
+import { getDetailDonation } from "../stores/actions/actionDonation";
 
-export default function DetailPage() {
+export default function DetailPage({ route, navigation }) {
+    const { id } = route.params;
+
+    const detailDonation = useSelector(state => state.detailDonation);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(getDetailDonation(id))
+    }, [dispatch])
+
     return (
         <ScrollView style={styles.containerColumn}>
             <View >
-                <Text style={styles.Texttitle}>Yayan example</Text>
+                <Text style={styles.Texttitle}>{detailDonation?.title}</Text>
             </View>
             <View style ={styles.BoxImage}>
                 <Image
                     style={styles.Image}
                     source={
                         {
-                            uri: 'https://jagad.id/wp-content/uploads/2018/06/Pengertian-Yayasan-Syarat-Pendirian-Jenis-Jenis-dan-Tujuan.jpeg'
+                            uri: detailDonation?.image
                         }
                     }
                 />
@@ -21,6 +32,7 @@ export default function DetailPage() {
             <View style={styles.containerRow}>
                 <View style={styles.BoxStatus}>
                     <Text style={styles.TextStatus}>Target Amount</Text>
+                    <Text style={styles.TextStatus}>{detailDonation?.targetAmount}</Text>
                 </View>
                 <View style={styles.BoxStatus}>
                     <Text style={styles.TextStatus}>Status</Text>
@@ -32,6 +44,12 @@ export default function DetailPage() {
             <View>
                 <Maps/>
             </View>
+            {/* <Pressable
+                style={[styles.button, styles.buttonOpen]}
+                onPress={()=> navigation.navigate('')}
+            >
+                <Text>Donate</Text>
+            </Pressable> */}
         </ScrollView>
     )
 }
@@ -72,5 +90,19 @@ const styles = StyleSheet.create({
         color : 'white',
         fontSize : 20,
         textAlign : 'center'
-    }
+    },
+    // button: {
+    //     margin: 10,
+    //     borderRadius: 10,
+    //     padding: 10,
+    //     elevation: 2,
+    // },
+    // buttonOpen: {
+    //     backgroundColor: "#F194FF",
+    // },
+    // textStyle: {
+    //     color: "white",
+    //     fontWeight: "bold",
+    //     textAlign: "center",
+    // },
 })

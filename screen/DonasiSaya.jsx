@@ -26,7 +26,7 @@ export default function DonasiSaya({ navigation }) {
 
     function withdraw() {
         axios({
-            url: `http://10.0.2.2:3000/withdraw/${donationId}`,
+            url: `http://192.168.1.2:3000/withdraw/${donationId}`,
             method: 'put',
             headers: { access_token }
         })
@@ -98,9 +98,10 @@ export default function DonasiSaya({ navigation }) {
                             </Pressable> : <Pressable
                             style={[styles.button, styles.buttonOpen]}
                             onPress={()=> navigation.navigate('ReportForm', {donationId: item.id})}
-                        >
-                            <Text style={styles.textStyle}>Send Report</Text>
-                        </Pressable>
+                            >
+                                <Text style={styles.textStyle}>Send Report</Text>
+                            </Pressable>
+
                         }
                     </View>
                 )}
@@ -115,6 +116,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: "center",
         backgroundColor: "#fff",
+        padding: 10
         //   justifyContent: 'center',
     },
     card: {
@@ -124,7 +126,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         marginTop: 10,
         marginBottom: 10,
-        height: 170,
+        height: 200,
         width: 350,
         borderRadius: 10,
         backgroundColor: "#fff",
