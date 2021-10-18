@@ -58,7 +58,7 @@ export default function DonasiSaya({ navigation }) {
                                 <Text style={styles.textStyle}>gajadi</Text>
                             </Pressable>
                             <Pressable
-                                style={[styles.button, styles.buttonClose]}
+                                style={[stsetDonationsAsyncyles.button, styles.buttonClose]}
                                 onPress={async () => {
                                     withdraw()
                                     

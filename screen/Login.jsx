@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { TextInput, View, Text, Pressable, StyleSheet } from 'react-native'
+import { TextInput, View, Text, Pressable, StyleSheet, Image } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import { actionLogin, setLogin } from '../stores/actions/actionLogin'
 
@@ -10,9 +10,6 @@ export default function Login({ navigation }) {
     const [password, onChangePassword] = useState("")
 
     function loginBtn() {
-        // useEffect(()=>{
-        //     dispatch()
-        // })
 
         dispatch(actionLogin({
             email,
@@ -20,11 +17,11 @@ export default function Login({ navigation }) {
         }))
         .then((res) => {
             dispatch(setLogin(res.data.access_token))
-            navigation.navigate('ListDonasi')
+            navigation.navigate('HomePage')
             navigation.reset({
                 index: 0,
                 routes: [
-                    { name: 'ListDonasi' },
+                    { name: 'HomePage' },
                 ],
             })// prevent back
         })
@@ -37,14 +34,19 @@ export default function Login({ navigation }) {
 
     return (
         <View style={styles.container}>
-            <Text>email</Text>
+            <View>
+                <Image style={styles.picture} source={require('../assets/4851046.jpg')}/>
+            </View>
+            <View style={styles.inputContainer}>
+
+            <Text>Email</Text>
             <TextInput
                 style={styles.input}
                 onChangeText={onChangeEmail}
                 value={email}
                 placeholder="email"
             />
-            <Text>password</Text>
+            <Text>Password</Text>
             <TextInput
                 style={styles.input}
                 onChangeText={onChangePassword}
@@ -52,33 +54,75 @@ export default function Login({ navigation }) {
                 placeholder="password"
                 secureTextEntry={true}
             />
-            <Pressable onPress={loginBtn}>
-                <Text>Login</Text>
+            <Pressable style={styles.signIn} onPress={loginBtn}>
+                <Text style={styles.textBtn}>Sign In</Text>
             </Pressable>
-            <Pressable onPress={()=> navigation.navigate('Register')}>
-                <Text>Sign Up</Text>
+            <View style={styles.regisContainer}>
+            <Text>Don't have Account?</Text>
+            <Pressable style={styles.regisBtn} onPress={()=> navigation.navigate('Register')}>
+                <Text style={styles.regisText}>Sign Up</Text>
             </Pressable>
-            <Pressable onPress={()=> navigation.navigate('DonasiSaya')}>
-                <Text>Donasi Saya</Text>
-            </Pressable>
+            </View>
+            </View>
         </View>
     );
-
-
 
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
+        backgroundColor: '#3DB2FF',
+        alignItems:'center'
     },
     input: {
         height: 40,
         margin: 12,
-        borderBottomWidth: 1,
+        borderWidth: 1,
+        borderRadius:30,
+        borderColor:'#fff',
         padding: 10,
+        width:300,
+        textAlign:'center',
+        backgroundColor:'#fff'
     },
+    picture:{
+        width:400,
+        height:350,
+        
+    },
+    inputContainer:{
+        flex:1,
+        alignItems:'center',
+        justifyContent:'center',
+        backgroundColor: '#F5F5F5',
+        borderTopEndRadius: 80,
+        borderTopLeftRadius: 80,
+        width:400
+    },
+    signIn:{
+        borderWidth:1,
+        borderRadius:30,
+        width:300,
+        height:40,
+        backgroundColor: '#3DB2FF',
+        borderColor:'#3DB2FF'
+    },
+    textBtn:{
+        textAlign:'center',
+        marginTop: 9,
+        fontSize:15,
+        fontWeight:'bold',
+        color:'#fff'
+    },
+    regisContainer:{
+        flexDirection:'row',
+        marginTop: 5
+    },
+    regisBtn:{
+        marginLeft:5,
+    },
+    regisText:{
+        color:'#3DB2FF'
+    }
 });

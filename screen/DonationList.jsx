@@ -17,7 +17,6 @@ function DonationList({ navigation }) {
         dispatch(setDonationsAsync())
     }, [dispatch])
 
-
     return (
         <SafeAreaView style={styles.container}>
             <View >
