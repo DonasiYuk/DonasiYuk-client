@@ -31,7 +31,7 @@ export default function DonasiSaya({ navigation }) {
             headers: { access_token }
         })
             .then(res => {
-                // console.log(res.data);
+                dispatch(fetchUserDonations(access_token))
             })
             .catch(err => console.log(err))
     }
@@ -61,7 +61,7 @@ export default function DonasiSaya({ navigation }) {
                                 style={[styles.button, styles.buttonClose]}
                                 onPress={async () => {
                                     withdraw()
-                                    dispatch(fetchUserDonations(access_token))
+                                    
                                     setModalVisible(!modalVisible)
                                 }}
                             >
@@ -90,7 +90,7 @@ export default function DonasiSaya({ navigation }) {
                             item.status === 'incomplete' ? <Pressable
                                 style={[styles.button, styles.buttonOpen]}
                                 onPress={() => {
-                                    setDonationId(1)
+                                    setDonationId(item.id)
                                     setModalVisible(true)
                                 }}
                             >

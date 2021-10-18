@@ -19,7 +19,6 @@ export function fetchUserDonations(access_token) {
             headers: { access_token }
         })
             .then(res => {
-                console.log(res.data);
                 dispatch(setUserDonations(res.data))
             })
             .catch(console.log())

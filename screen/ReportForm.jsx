@@ -4,9 +4,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import * as ImagePicker from 'expo-image-picker'
 import Constants  from 'expo-constants';
 import { report } from '../stores/actions/actionReport'
-import { useSelector } from 'react-redux'
-
-
 
 export default function Report({navigation, route}) {
     const donationId = route.params.donationId
@@ -31,7 +28,7 @@ export default function Report({navigation, route}) {
     useEffect(() => {
         imgAccess()    
     }, [])
-     
+    
     async function PickImage() {
       let result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -43,10 +40,8 @@ export default function Report({navigation, route}) {
       if(!result.cancelled){
         setImage(result.uri)
         setLocalUri(result.uri)
-        setFilename(localUri.split('/').pop())
-        console.log(match, '<<<<<<<<<');
-        let getType = match ? `image/${match[1]}` : `image`;
-        setType(getType)
+        setFilename(result.uri.split('/').pop())
+        setType(result.type)
       }
     }
 
@@ -57,11 +52,11 @@ export default function Report({navigation, route}) {
         formData.append('description', description);
         formData.append('donationId', donationId);
         dispatch(report(formData, access_token))
-        .then(()=>{
+        .then((res)=>{
             navigation.navigate('DonasiSaya')
         })
         .catch((err)=>{
-            console.log(err)
+            console.log(err, '??????????')
         })
 
     }

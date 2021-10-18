@@ -14,8 +14,18 @@ export function setCreate(payload) {
 }
 
 export function actionCreate(data) {
-    return function (dispatch) {
-        console.log(data);
+    return function (dispatch, getState) {
+        const { access_token, donations } = getState();
+
+        return axios({
+            url: `${baseUrl}/donations`,
+            method: 'post',
+            data,
+            headers: { 
+                access_token,
+                "Content-Type": "multipart/form-data",
+            }
+        })
     }
 }
 
