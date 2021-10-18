@@ -3,17 +3,21 @@ import { TextInput, View, Text, SafeAreaView, StyleSheet, Pressable, Platform, B
 import { useDispatch, useSelector } from 'react-redux'
 import * as ImagePicker from 'expo-image-picker'
 import Constants  from 'expo-constants';
+import { report } from '../stores/actions/actionReport'
+import { useSelector } from 'react-redux'
 
 
-export default function Report() {
+
+export default function Report({navigation, route}) {
+    const donationId = route.params.donationId
     const dispatch = useDispatch()
-    const [title, setTitle] = useState("")
     const [description, setDescription] = useState("")
     const [image, setImage] = useState(null)
     const [localUri, setLocalUri] = useState(null)
     const [filename, setFilename] = useState(null)
     const [type, setType] = useState(null)
 
+    const access_token = useSelector((state) => state.access_token)
 
     async function imgAccess(){
         if(Platform.OS !== 'web'){
@@ -47,15 +51,18 @@ export default function Report() {
     }
 
     function submitReport() {
-        console.log('ini function submit')
-        console.log('ini Title >>>>', title)
-        console.log('ini description >>>>', description)
-        console.log('ini image >>>>', image)
         let formData = new FormData();
         // Assume "photo" is the name of the form field the server expects
         formData.append('image', { uri: localUri, name: filename, type });
-        formData.append('title', { uri: localUri, name: filename, type });
-        formData.append('description', { uri: localUri, name: filename, type });
+        formData.append('description', description);
+        formData.append('donationId', donationId);
+        dispatch(report(formData, access_token))
+        .then(()=>{
+            navigation.navigate('DonasiSaya')
+        })
+        .catch((err)=>{
+            console.log(err)
+        })
 
     }
 
@@ -64,13 +71,6 @@ export default function Report() {
         <SafeAreaView style={styles.container}>
             <View style={styles.card}>
             <Text style={styles.formName}>Report Form</Text>
-            <Text>Title</Text>
-            <TextInput
-                style={styles.input}
-                onChangeText={setTitle}
-                value={title}
-                placeholder="Title"
-            />
             <Text>Description</Text>
             <TextInput
                 style={styles.input}

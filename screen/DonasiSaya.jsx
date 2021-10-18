@@ -96,11 +96,12 @@ export default function DonasiSaya({ navigation }) {
                             >
                                 <Text style={styles.textStyle}>Withdraw</Text>
                             </Pressable> : <Pressable
-                                style={[styles.button, styles.buttonOpen]}
-                                onPress={()=> navigation.navigate('ReportForm')}
+                            style={[styles.button, styles.buttonOpen]}
+                            onPress={()=> navigation.navigate('ReportForm', {donationId: item.id})}
                             >
                                 <Text style={styles.textStyle}>Send Report</Text>
                             </Pressable>
+
                         }
                     </View>
                 )}
