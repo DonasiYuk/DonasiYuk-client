@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { TextInput, View, Text, Pressable, StyleSheet, Image } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import { actionLogin, setLogin } from '../stores/actions/actionLogin'
+import {Entypo} from '@expo/vector-icons'
+
 
 
 export default function Login({ navigation }) {
@@ -53,6 +55,7 @@ export default function Login({ navigation }) {
                 value={password}
                 placeholder="password"
                 secureTextEntry={true}
+                // underlineColorAndroid="transparent"
             />
             <Pressable style={styles.signIn} onPress={loginBtn}>
                 <Text style={styles.textBtn}>Sign In</Text>
@@ -124,5 +127,6 @@ const styles = StyleSheet.create({
     },
     regisText:{
         color:'#3DB2FF'
-    }
+    },
+    
 });
