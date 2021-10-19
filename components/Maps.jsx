@@ -9,8 +9,8 @@ export default function Maps({ dataLocation }) {
     const getInitialState = () => {
         return {
             region: {
-                latitude: dataLocation.lat,
-                longitude: dataLocation.long,
+                latitude: Number(dataLocation.lat),
+                longitude: Number(dataLocation.long),
                 latitudeDelta: 0.0922,
                 longitudeDelta: 0.0421,
             },
@@ -41,7 +41,7 @@ export default function Maps({ dataLocation }) {
                 <MapView
                     style={{
                         width: "100%",
-                        height: 250,
+                        height: 200,
                         marginTop: 10,
                         borderRadius: 10
                     }}
@@ -50,8 +50,8 @@ export default function Maps({ dataLocation }) {
                 >
                     <Marker
                         coordinate={{
-                            latitude: dataLocation.lat,
-                            longitude: dataLocation.long,
+                            latitude: Number(dataLocation.lat),
+                            longitude: Number(dataLocation.long),
                         }}
                     />
                 </MapView>

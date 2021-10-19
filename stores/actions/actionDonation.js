@@ -17,7 +17,7 @@ export function actionCreate(data) {
     return function (dispatch, getState) {
         const { access_token, donations } = getState();
 
-        axios({
+        return axios({
             url: `${baseUrl}/donations`,
             method: 'post',
             data,
@@ -26,10 +26,6 @@ export function actionCreate(data) {
                 "Content-Type": "multipart/form-data",
             }
         })
-        .then((res) => {
-            dispatch(setDonations(donations.concat(res.data.newDonation)))
-        })
-        .catch(err => console.log(err))
     }
 }
 

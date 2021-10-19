@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Text, Image, View, StyleSheet, Pressable, Dimensions, StatusBar } from "react-native"
 import { ImageHeaderScrollView, TriggeringView } from 'react-native-image-header-scroll-view';
 import Maps from '../components/Maps';
@@ -8,6 +8,8 @@ const MAX_HEIGHT = 350;
 
 export default function DetailPage({ route, navigation }) {
     const itemData = route.params.itemData;
+
+    const [midtrans, setMidtrans] = useState("")
 
     function payDonation(id) {
 

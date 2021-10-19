@@ -64,8 +64,9 @@ export default function HomePage() {
             screenOptions={{
                 // showLabel: false,
                 tabBarStyle: {
+                    // height: 50,
                     position: 'absolute',
-                    bottom: 25,
+                    bottom: 15,
                     left: 20,
                     right: 20,
                     elevation: 0,

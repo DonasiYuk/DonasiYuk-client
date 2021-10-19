@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { useDispatch,useSelector } from "react-redux"
-import { ScrollView, Text, TextInput, StyleSheet, Button, Image } from "react-native"
+import { ScrollView, Text, TextInput, StyleSheet, Button, Image, Pressable, View, TouchableOpacity } from "react-native"
 import * as Location from 'expo-location'
 import * as ImagePicker from 'expo-image-picker'
 import Upload from "../components/Upload"
@@ -8,11 +8,17 @@ import { actionCreate, setDonations } from '../stores/actions/actionDonation'
 
 export default function Create() {
     const dispatch = useDispatch()
-    const [payload, setPayload] = useState({})
+    const [payload, setPayload] = useState({
+        title: "",
+        description: "",
+        targetAmount: ''
+    })
     const [image, setImage] = useState(null)
     const [localUri, setLocalUri] = useState(null)
     const [filename, setFilename] = useState(null)
     const [type, setType] = useState(null)
+    const [location, setLocation] = useState({})
+    const donations = useSelector(state => state.donations)
 
     useEffect(() => {
         (async () => {
@@ -23,7 +29,7 @@ export default function Create() {
             }
 
             let location = await Location.getCurrentPositionAsync({});
-            setPayload({ ...payload, lat: location.coords.latitude, long: location.coords.longitude });
+            setLocation({ ...payload, lat: location.coords.latitude, long: location.coords.longitude });
         })();
     }, []);
 
@@ -34,14 +40,24 @@ export default function Create() {
         formData.append('title', payload.title);
         formData.append('description', payload.description);
         formData.append('targetAmount', payload.targetAmount);
-        formData.append('lat', payload.lat);
-        formData.append('long', payload.long);
+        formData.append('lat', location.lat);
+        formData.append('long', location.long);
 
         dispatch(actionCreate(formData))
+            .then((res) => {
+                console.log('berhasil');
+                dispatch(setDonations(donations.concat(res.data.newDonation)))
+                reset()
+            })
+            .catch(err => console.log(err))
     }
 
-    function getImage(image){
-        setPayload({...payload, imgUrl : image})
+    function reset(){
+        setPayload({ ...payload, title: "", description: '', targetAmount: ''})
+        setImage(null)
+        setLocalUri(null)
+        setFilename(null)
+        setType(null)
     }
 
     async function PickImage() {
@@ -51,7 +67,7 @@ export default function Create() {
           aspect: [4,3],
           quality: 1
         })
-        console.log(result)
+        // console.log(result)
         if(!result.cancelled){
             setImage(result.uri)
             setLocalUri(result.uri)
@@ -61,59 +77,87 @@ export default function Create() {
     }
 
     return (
-        <ScrollView>
-            <Text>{JSON.stringify(payload)}</Text>
-            <Text style={styles.text}>Title</Text>
-            <TextInput style={styles.input}
-                onChangeText={(text) => setPayload({ ...payload, title: text })}
-                name="title"
-                placeholder="title" />
-            <Text style={styles.text}>Description</Text>
-            <TextInput style={styles.input}
-                onChangeText={(text) => setPayload({ ...payload, description: text })}
-                name="description"
-                placeholder="description" />
-            <Text style={styles.text}>Target Amount</Text>
-            <TextInput style={styles.input}
-                onChangeText={(text) => setPayload({ ...payload, targetAmount: text })}
-                name="targetAmount"
-                placeholder="Target Amount" />
-            <Text style={styles.text}>Balance</Text>
-            <TextInput style={styles.input}
-                onChangeText={(text) => setPayload({ ...payload, balance: text })}
-                name="balance"
-                placeholder="Balance" />
-            {image && <Image source={{uri:image}} style={{
-                    width:200,
-                    height:200,
-                    borderRadius: 10,
-                    marginVertical: 10
-            }}/>}
-            <Button title="Choose Image" onPress={PickImage}/>
-            <Button
-                title="Submit"
-                onPress={submit}
-            />
-        </ScrollView>
+        <View style={{ backgroundColor: '#fff', flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+            <ScrollView style={styles.container}>
+                <Text style={styles.text}>Title</Text>
+                <TextInput style={styles.input}
+                    value={payload.title}
+                    onChangeText={(text) => setPayload({ ...payload, title: text })}
+                    name="title"
+                    placeholder="Title" />
+                <Text style={styles.text}>Description</Text>
+                <TextInput style={styles.input}
+                    value={payload.description}
+                    onChangeText={(text) => setPayload({ ...payload, description: text })}
+                    name="description"
+                    placeholder="Description" />
+                <Text style={styles.text}>Target Amount</Text>
+                <TextInput style={styles.input}
+                    value={payload.targetAmount}
+                    keyboardType='numeric'
+                    onChangeText={(text) => setPayload({ ...payload, targetAmount: text })}
+                    name="targetAmount"
+                    placeholder="Target Amount" />
+                {image && <Image source={{ uri: image }} style={styles.image} />}
+                <Pressable
+                    onPress={PickImage}
+                    style={styles.btn}
+                >
+                    <Text style={styles.text}>Choose Image</Text>
+                </Pressable>
+                {/* <View>
+                    <Maps dataLocation={payload} />
+                </View> */}
+                <Pressable
+                    style={styles.btn}
+                    onPress={submit}
+                >
+                    <Text style={styles.text}>Submit</Text>
+                </Pressable>
+            </ScrollView>
+        </View>
     )
 }
 
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
+        padding: 20,
+        borderColor: 'black'
     },
     input: {
-        padding : 10,
-        marginBottom: 20,
-        borderWidth: 1,
-
-    },
-    text:{
-        textAlign:"center",
         padding: 10,
-        fontWeight:'bold'
+        marginBottom: 10,
+        borderWidth: 1,
+        height: 40,
+        margin: 12,
+        borderRadius:20,
+        borderColor:'black',
+        width:300,
+        textAlign:'center',
+        backgroundColor:'#fff'
+    },
+    text: {
+        textAlign: "center",
+        // padding: 10,
+        marginTop: 5,
+        fontWeight: 'bold',
+    },
+    image: {
+        width: 200,
+        height: 200,
+        borderRadius: 10,
+        marginVertical: 10,
+        marginHorizontal: '20%',
+    },
+    btn: {
+        // backgroundColor: '#3DB2FF',
+        // padding: 5,
+        // marginVertical: 10,
+        margin: 10,
+        borderRadius: 10,
+        padding: 10,
+        elevation: 2,
+        backgroundColor: "#3DB2FF",
     }
 });
