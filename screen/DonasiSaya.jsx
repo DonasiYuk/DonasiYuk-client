@@ -27,7 +27,7 @@ export default function DonasiSaya({ navigation }) {
 
     function withdraw() {
         axios({
-            url: `http://192.168.1.12:3000/withdraw/${donationId}`,
+            url: `http://10.0.2.2:3000/withdraw/${donationId}`,
             method: 'put',
             headers: { access_token }
         })
