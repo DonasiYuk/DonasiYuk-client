@@ -7,6 +7,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 
 import DonasiSaya from "./DonasiSaya";
 import Create from "./Create";
+import Profile from "./Profile"
 
 function DonationList({ navigation }) {
     const dispatch = useDispatch()
@@ -59,6 +60,7 @@ export default function HomePage() {
             <Tab.Screen name="DonationList" component={DonationList}/>
             <Tab.Screen name="DonasiSaya" component={DonasiSaya}/>
             <Tab.Screen name="Create" component={Create}/>
+            <Tab.Screen name="Profile" component={Profile}/>
         </Tab.Navigator>
     )
 }
