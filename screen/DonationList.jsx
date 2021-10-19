@@ -4,6 +4,7 @@ import { SearchBar } from 'react-native-elements'
 import { useDispatch, useSelector } from 'react-redux'
 import { setDonationsAsync } from '../stores/actions/actionDonation'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import { useFocusEffect } from '@react-navigation/native'
 
 import DonasiSaya from "./DonasiSaya";
 import Create from "./Create";
@@ -13,18 +14,15 @@ function DonationList({ navigation }) {
     const dispatch = useDispatch()
     const donations = useSelector(state => state.donations)
 
-
-    useEffect(() => {
-        dispatch(setDonationsAsync())
-    }, [dispatch])
-
+    useFocusEffect(
+        React.useCallback(() => {
+    
+          return dispatch(setDonationsAsync())
+        }, [dispatch])
+      );
+    
     return (
         <SafeAreaView style={styles.container}>
-            <View >
-                <SearchBar
-                    inputContainerStyle={styles.searchbar}
-                    placeholder="type Here ..." />
-            </View>
             <FlatList
                 data={donations}
                 renderItem={({ item }) => (
@@ -35,14 +33,20 @@ function DonationList({ navigation }) {
                     }}>
 
                         <View style={styles.card}>
+                            <View style={styles.imgContainer}>
+                                <Image style={styles.imgCard} source={require('../assets/register.jpg')}/>
+                            </View>
+                            <View style={styles.textContainer}>
+
                             <Text style={styles.title}>{item.title}</Text>
-                            <Text style={{ textAlign: "left" }}>Terkumpul</Text>
+                            <Text >Terkumpul</Text>
                             <View style={{ flexDirection: "row" }}>
                                 <Text style={{ textAlign: "left", fontWeight: "bold" }}>
                                     Rp.{item.balance},00
                                 </Text>
-                                <Text style={{ marginLeft: "auto" }}>{item.status}</Text>
                             </View>
+                            </View>
+
                         </View>
                     </TouchableOpacity>
                 )}
@@ -95,15 +99,37 @@ export default function HomePage() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        alignItems:'center',
+    },
+    seacrhBarContainer:{
+        backgroundColor:'#3DB2FF'
     },
     searchbar: {
-        borderRadius: 30
+        borderRadius: 30,
+        width:376,
+        backgroundColor:'#FFF',
+        color:'#3DB2FF'
+    },
+    imgContainer:{
+        flex:1,
+        justifyContent:'center',
+        alignItems:'center'
+    },
+    textContainer:{
+        flex:1,
+        flexDirection:'column',
+        alignItems:'center',
+        justifyContent:'center'
+    },
+    imgCard:{
+        width:150,
+        height:150
     },
     card: {
         padding: 10,
-        flexDirection: "column",
+        flexDirection: 'row',
         // alignItems: 'center',
-        justifyContent: "center",
+        justifyContent: 'flex-start',
         marginTop: 10,
         marginBottom: 10,
         height: 170,
@@ -123,28 +149,13 @@ const styles = StyleSheet.create({
     title: {
         marginBottom: 10,
         fontWeight: "bold",
-        fontSize: 20,
+        fontSize: 15,
     },
     centeredView: {
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
         marginTop: 22,
-    },
-    modalView: {
-        margin: 20,
-        backgroundColor: "white",
-        borderRadius: 20,
-        padding: 35,
-        alignItems: "center",
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 4,
-        elevation: 5,
     },
     button: {
         margin: 10,
@@ -163,8 +174,5 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         textAlign: "center",
     },
-    modalText: {
-        marginBottom: 15,
-        textAlign: "center",
-    },
+    
 });
