@@ -1,108 +1,107 @@
-import React, { useEffect, useState } from "react";
-import { Text, ScrollView, Image, View, StyleSheet, Pressable } from "react-native"
-import Maps from '../components/Maps'
-import { useDispatch, useSelector } from "react-redux";
-import { getDetailDonation } from "../stores/actions/actionDonation";
+import React from "react";
+import { Text, Image, View, StyleSheet, Pressable, Dimensions, StatusBar } from "react-native"
+import { ImageHeaderScrollView, TriggeringView } from 'react-native-image-header-scroll-view';
+import Maps from '../components/Maps';
+
+const MIN_HEIGHT = Platform.OS === 'ios' ? 90 : 55;
+const MAX_HEIGHT = 350;
 
 export default function DetailPage({ route, navigation }) {
-    const { id } = route.params;
-
-    const detailDonation = useSelector(state => state.detailDonation);
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        dispatch(getDetailDonation(id))
-    }, [dispatch])
+    const itemData = route.params.itemData;
 
     return (
-        <ScrollView style={styles.containerColumn}>
-            <View >
-                <Text style={styles.Texttitle}>{detailDonation?.title}</Text>
-            </View>
-            <View style ={styles.BoxImage}>
-                <Image
-                    style={styles.Image}
-                    source={
-                        {
-                            uri: detailDonation?.image
-                        }
-                    }
-                />
-            </View>
-            <View style={styles.containerRow}>
-                <View style={styles.BoxStatus}>
-                    <Text style={styles.TextStatus}>Target Amount</Text>
-                    <Text style={styles.TextStatus}>{detailDonation?.targetAmount}</Text>
-                </View>
-                <View style={styles.BoxStatus}>
-                    <Text style={styles.TextStatus}>Status</Text>
-                </View>
-            </View>
-            <View>
-                <Text>Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui blanditiis ab ipsum minima dolorum modi accusamus error quibusdam! Inventore esse, perferendis sequi vel expedita non quasi tempore delectus eligendi officia?</Text>
-            </View>
-            <View>
-                <Maps/>
-            </View>
-            {/* <Pressable
-                style={[styles.button, styles.buttonOpen]}
-                onPress={()=> navigation.navigate('')}
+        <View style={newStyles.container}>
+            <StatusBar barStyle="light-content" />
+            <ImageHeaderScrollView
+                maxHeight={MAX_HEIGHT}
+                minHeight={MIN_HEIGHT}
+                maxOverlayOpacity={0.6}
+                minOverlayOpacity={0.3}
+                renderHeader={() => (
+                  <Image source={{ uri: itemData.image}} style={newStyles.image} />
+                )}
             >
-                <Text>Donate</Text>
-            </Pressable> */}
-        </ScrollView>
+                <TriggeringView style={newStyles.section}>
+                    <View>
+                        <Text style={newStyles.title}>{itemData.title}</Text>
+                        <Text style={newStyles.sectionContent}>Rp.{itemData.balance},00 from Rp.{itemData.targetAmount},00</Text>
+                        <Text style={{ color: 'blue'}}>{itemData.User.username}</Text>
+                        <Pressable
+                            style={[styles.button, styles.buttonOpen]}
+                            onPress={()=> navigation.navigate('ReportForm')}
+                            >
+                                <Text style={styles.textStyle}>Donate</Text>
+                        </Pressable>
+                        <Text style={{ fontWeight: 'bold' }}>{itemData.Transactions.length} Donasi</Text>
+                        <Text style={newStyles.sectionContent}>{itemData.description}</Text>
+                        <View>
+                            <Maps dataLocation={itemData} />
+                        </View>
+                    </View>
+                </TriggeringView>
+            </ImageHeaderScrollView>
+        </View>
     )
 }
 
 const styles = StyleSheet.create({
-    containerColumn : {
-        flex : 1,
-        flexDirection : 'column'
+    button: {
+        marginTop: 10,
+        marginBottom: 10,
+        borderRadius: 5,
+        padding: 10,
+        elevation: 2,
     },
-    containerRow : {
-        flex : 1,
-        flexDirection : 'row',
-        paddingHorizontal: "5%",
+    buttonOpen: {
+        backgroundColor: "#3DB2FF",
     },
-    Texttitle : {
-        textAlign : 'center',
-        fontWeight : 'bold',
-        fontSize: 36,
-        padding : 20
-    },
-    Image:{
-        width : 250,
-        height : 150,
-    },
-    BoxImage : {
-        paddingHorizontal: "17.5%",
-        paddingBottom : 25
-    },
-    BoxStatus : {
-        width: 150,
-        height : 75,
-        backgroundColor : 'black',
-        fontSize: 20,
-        marginHorizontal : 20,
-        borderRadius : 10
-    },
-    TextStatus: {
-        color : 'white',
-        fontSize : 20,
-        textAlign : 'center'
-    },
-    // button: {
-    //     margin: 10,
-    //     borderRadius: 10,
-    //     padding: 10,
-    //     elevation: 2,
-    // },
-    // buttonOpen: {
-    //     backgroundColor: "#F194FF",
-    // },
-    // textStyle: {
-    //     color: "white",
-    //     fontWeight: "bold",
-    //     textAlign: "center",
-    // },
+    textStyle: {
+        color: "white",
+        fontWeight: "bold",
+        textAlign: "center",
+    }
 })
+
+const newStyles = StyleSheet.create({
+    container: {
+      flex: 1,
+    },
+    image: {
+      height: MAX_HEIGHT,
+      width: Dimensions.get('window').width,
+      alignSelf: 'stretch',
+      resizeMode: 'cover',
+    },
+    title: {
+      fontSize: 20,
+      fontWeight: '500',
+      marginBottom: 10
+    },
+    name: {
+      fontWeight: 'bold',
+    },
+    section: {
+      padding: 20,
+      borderBottomWidth: 1,
+      borderBottomColor: '#cccccc',
+      backgroundColor: 'white',
+    },
+    sectionContent: {
+      fontSize: 14,
+      textAlign: 'justify',
+    },
+    titleContainer: {
+      flex: 1,
+      alignSelf: 'stretch',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    imageTitle: {
+      color: 'white',
+      backgroundColor: 'transparent',
+      fontSize: 24,
+    },
+    sectionLarge: {
+      minHeight: 300,
+    },
+});

@@ -13,7 +13,6 @@ export default function Login({ navigation }) {
         // useEffect(()=>{
         //     dispatch()
         // })
-
         dispatch(actionLogin({
             email,
             password
@@ -29,7 +28,7 @@ export default function Login({ navigation }) {
             })// prevent back
         })
         .catch((err)=>{
-            console.log(err.message);
+            console.log(err);
         })
 
     }

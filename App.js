@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Image } from 'react-native';
 import { Provider } from 'react-redux'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
@@ -27,10 +27,19 @@ export default function App() {
           <Stack.Screen name="Register" component={Register} />
           <Stack.Screen name="Create" component={Create} options={{ headerStyle: { backgroundColor: '#3DB2FF' }, headerTitleStyle: { color: 'white' }}} />
           <Stack.Screen name="Edit" component={Edit} />
-          <Stack.Screen name="DonasiSaya" component={DonasiSaya} />
+          <Stack.Screen name="Donasi Saya" component={DonasiSaya} options={{ headerStyle: { backgroundColor: '#3DB2FF' }, headerTitleStyle: { color: 'white' }}} />
           <Stack.Screen name="ListDonasi" component={DonationList} options={{ headerShown: false }}/>
           <Stack.Screen name="ReportForm" component={ReportForm} />
-          <Stack.Screen name="DetaiPage" component={DetailPage}/>
+          <Stack.Screen 
+            name="Detail" 
+            component={DetailPage}
+            options={({route}) => ({
+              headerBackTitleVisible: false,
+              headerTitle: false,
+              headerTransparent: true,
+              headerTintColor: '#fff'
+            })}
+          />
           <Stack.Screen name="History Transaction" component={HistoryTransaction} options={{ headerStyle: { backgroundColor: '#3DB2FF' }, headerTitleStyle: { color: 'white' }}} />
         </Stack.Navigator>
       </NavigationContainer>
