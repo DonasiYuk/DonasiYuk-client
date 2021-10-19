@@ -29,13 +29,8 @@
     "react-native-web": "~0.13.12",
     "react-redux": "^7.2.5",
     "redux": "^4.1.1",
-<<<<<<< HEAD
     "redux-thunk": "^2.3.0",
-    "expo-location": "~12.1.2",
     "react-native-webview": "11.6.2"
-=======
-    "redux-thunk": "^2.3.0"
->>>>>>> styling-detail
   },
   "devDependencies": {
     "@babel/core": "^7.9.0"
