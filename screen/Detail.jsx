@@ -1,16 +1,25 @@
-import React from "react";
-import { Text, Image, View, StyleSheet, Pressable, Dimensions, StatusBar } from "react-native"
+import React,{useState} from "react";
+import { Text, Image, View, StyleSheet, Pressable, Dimensions, StatusBar, Modal, TextInput } from "react-native"
 import { ImageHeaderScrollView, TriggeringView } from 'react-native-image-header-scroll-view';
 import Maps from '../components/Maps';
+import { useSelector } from "react-redux";
+import { WebView } from 'react-native-webview'
+import axios from "axios";
+
 
 const MIN_HEIGHT = Platform.OS === 'ios' ? 90 : 55;
 const MAX_HEIGHT = 350;
 
 export default function DetailPage({ route, navigation }) {
     const itemData = route.params.itemData;
+    const [modalVisible, setModalVisible] = useState(false);
+    const detailDonation = useSelector(state => state.detailDonation);
+    const access_token = useSelector(state => state.access_token)
+    const [amount, setAmount] = useState(0)
+    const [midtrans, setMidtrans] = useState("")
 
     function payDonation(id) {
-
+      console.log(id);
         axios({
             url: `http://10.0.2.2:3000/transactions/${id}`,
             method: 'post',
@@ -18,7 +27,6 @@ export default function DetailPage({ route, navigation }) {
             data: { amount }
         })
             .then((res) => {
-                // console.log(res.data.redirect_url);
                 setMidtrans(res.data.redirect_url)
                 setModalVisible(false)
 
@@ -37,6 +45,37 @@ export default function DetailPage({ route, navigation }) {
 
     return (
         <View style={newStyles.container}>
+          <Modal
+                animationType="slide"
+                transparent={true}
+                visible={modalVisible}
+                onRequestClose={() => {
+                    Alert.alert("Modal has been closed.");
+                    setModalVisible(!modalVisible);
+                }}
+            >
+                <View style={styles.centeredView}>
+                    <View style={styles.modalView}>
+                        <TextInput style={styles.modalText} onChangeText={setAmount} value={amount} />
+                        <View style={{ flexDirection: "row" }}>
+                            <Pressable
+                                style={[styles.button, styles.buttonClose]}
+                                onPress={() => setModalVisible(!modalVisible)}
+                            >
+                                <Text style={styles.textStyle}>Cancel</Text>
+                            </Pressable>
+                            <Pressable
+                                style={[styles.button, styles.buttonClose]}
+                                onPress={async () => {
+                                    payDonation(itemData?.id)
+                                }}
+                            >
+                                <Text style={styles.textStyle}>Donate</Text>
+                            </Pressable>
+                        </View>
+                    </View>
+                </View>
+            </Modal>
             <StatusBar barStyle="light-content" />
             <ImageHeaderScrollView
                 maxHeight={MAX_HEIGHT}
@@ -54,7 +93,7 @@ export default function DetailPage({ route, navigation }) {
                         <Text style={{ color: 'blue'}}>{itemData.User.username}</Text>
                         <Pressable
                             style={[styles.button, styles.buttonOpen]}
-                            onPress={()=> navigation.navigate('ReportForm')}
+                            onPress={()=> setModalVisible(true)}
                             >
                                 <Text style={styles.textStyle}>Donate</Text>
                         </Pressable>

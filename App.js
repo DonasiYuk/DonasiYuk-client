@@ -28,7 +28,7 @@ export default function App() {
           <Stack.Screen name="Create" component={Create} options={{ headerStyle: { backgroundColor: '#3DB2FF' }, headerTitleStyle: { color: 'white' }}} />
           <Stack.Screen name="Edit" component={Edit} />
           <Stack.Screen name="Donasi Saya" component={DonasiSaya} options={{ headerStyle: { backgroundColor: '#3DB2FF' }, headerTitleStyle: { color: 'white' }}} />
-          <Stack.Screen name="ListDonasi" component={DonationList} options={{ headerShown: false }}/>
+          <Stack.Screen name="HomePage" component={HomePage} options={{ headerShown: false }}/>
           <Stack.Screen name="ReportForm" component={ReportForm} />
           <Stack.Screen 
             name="Detail" 
