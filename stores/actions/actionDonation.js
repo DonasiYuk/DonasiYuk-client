@@ -5,7 +5,8 @@ import axios from 'axios'
 // const access_token = useSelector(state => state.access_token);
 
 // const baseUrl = "http://192.168.1.2:3000"
-const baseUrl = 'http://10.0.2.2:3000'
+// const baseUrl = 'http://10.0.2.2:3000'
+const baseUrl = 'http://192.168.1.24:3000'
 
 export function setCreate(payload) {
     return {
@@ -16,16 +17,24 @@ export function setCreate(payload) {
 
 export function actionCreate(data) {
     return function (dispatch, getState) {
-        const { access_token, donations } = getState();
-
-        return axios({
+        const { access_token, donations } = getState()
+        console.log(data)
+        axios({
             url: `${baseUrl}/donations`,
             method: 'post',
-            data,
+            data : {
+                data
+            },
             headers: { 
                 access_token,
-                "Content-Type": "multipart/form-data",
+                'Content-Type': 'multipart/form-data'
             }
+        })
+        .then(res => {
+            console.log(res.data)
+        })
+        .catch(err => {
+            console.log(err)
         })
     }
 }

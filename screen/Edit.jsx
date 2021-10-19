@@ -1,8 +1,9 @@
 import React, { useState } from "react"
-import { useDispatch,useSelector } from "react-redux"
-import { ScrollView, Text, TextInput, StyleSheet, Button } from "react-native"
+import { useDispatch, useSelector } from "react-redux"
+import { ScrollView, Text, TextInput, StyleSheet, TouchableOpacity } from "react-native"
 import Upload from "../components/Upload"
 import { actionCreate } from '../stores/actions/actionDonation'
+import NumericInput from 'react-native-numeric-input'
 
 export default function Edit() {
     const dispatch = useDispatch()
@@ -12,12 +13,12 @@ export default function Edit() {
         dispatch(actionCreate(data))
     }
 
-    function getImage(image){
-        setPayload({...payload, imgUrl : image})
+    function getImage(image) {
+        setPayload({ ...payload, imgUrl: image })
     }
 
     return (
-        <ScrollView>
+        <ScrollView style={styles.container}>
             <Text style={styles.text}>Title</Text>
             <TextInput style={styles.input}
                 onChangeText={(text) => setPayload({ ...payload, username: text })}
@@ -29,7 +30,14 @@ export default function Edit() {
                 name="description"
                 placeholder="description" />
             <Text style={styles.text}>Target Amount</Text>
-            <TextInput style={styles.input}
+            <NumericInput
+                totalWidth={350}
+                totalHeight={50}
+                rounded
+                iconStyle={{ color: 'black' }}
+                upDownButtonsBackgroundColor='#3DB2FF'
+                type='up-down'
+                style={styles.input}
                 onChangeText={(text) => setPayload({ ...payload, targetAmount: text })}
                 name="targetAmount"
                 placeholder="Target Amount" />
@@ -39,17 +47,27 @@ export default function Edit() {
                 name="latlong"
                 placeholder="LAT LONG MAP" />
             <Text style={styles.text}>Balance</Text>
-            <TextInput style={styles.input}
+            <NumericInput
+                totalWidth={350}
+                totalHeight={50}
+                rounded
+                iconStyle={{ color: 'black' }}
+                upDownButtonsBackgroundColor='#3DB2FF'
+                type='up-down'
+                style={styles.input}
                 onChangeText={(text) => setPayload({ ...payload, balance: text })}
                 name="balance"
                 placeholder="Balance" />
             <Upload
                 sendData={getImage}
             />
-            <Button
+            <TouchableOpacity
+                style={styles.btn}
                 title="Submit"
                 onPress={() => sendData(payload)}
-            />
+            >
+                <Text style={styles.text}>Submit</Text>
+            </TouchableOpacity>
         </ScrollView>
     )
 }
@@ -57,19 +75,29 @@ export default function Edit() {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
+        padding: 20,
     },
     input: {
-        padding : 10,
+        padding: 10,
         marginBottom: 20,
         borderWidth: 1,
-
+        borderRadius: 20
     },
-    text:{
-        textAlign:"center",
+    text: {
+        textAlign: "center",
         padding: 10,
-        fontWeight:'bold'
+        fontWeight: 'bold'
+    },
+    image: {
+        width: 200,
+        height: 200,
+        borderRadius: 10,
+        marginVertical: 10,
+        marginHorizontal: "22.5%",
+    },
+    btn: {
+        backgroundColor: '#3DB2FF',
+        padding: 5,
+        marginVertical: 20
     }
 });

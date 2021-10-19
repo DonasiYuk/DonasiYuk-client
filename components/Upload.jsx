@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import {
     StyleSheet,
     View,
-    Button,
-    Image
+    Text,
+    Image,
+    TouchableOpacity
 } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 
@@ -24,6 +25,9 @@ export default function Upload(params) {
     const pickImage = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1
         });
 
         if (!result.cancelled) {
@@ -34,15 +38,16 @@ export default function Upload(params) {
 
     return (
         <View style={styles.mainBody}>
-            <Button
-                title="Choose Image"
-                style={styles.buttonStyle}
+            <TouchableOpacity
+                style={styles.btn}
                 onPress={pickImage}
-            />
+            >
+                <Text style={styles.text}>Choose Image</Text>
+            </TouchableOpacity>
             {
                 image && <Image
                     source={{ uri: image }}
-                    style={{ width: 200, height: 200 }}
+                    style={styles.image}
                 />}
         </View>
     )
@@ -64,5 +69,27 @@ const styles = StyleSheet.create({
         marginLeft: 35,
         marginRight: 35,
         marginTop: 15,
+    },
+    image: {
+        width: 200,
+        height: 200,
+        borderRadius: 10,
+        marginVertical: 10,
+        marginHorizontal: "22.5%",
+    },
+    btn: {
+        backgroundColor: '#3DB2FF',
+        padding: 5,
+        marginVertical: 20
+    },
+    btn: {
+        backgroundColor: '#3DB2FF',
+        padding: 5,
+        marginVertical: 20
+    },
+    text: {
+        textAlign: "center",
+        padding: 10,
+        fontWeight: 'bold'
     },
 });

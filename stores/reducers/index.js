@@ -8,7 +8,7 @@ import {
 
 const initialState = {
     donations: [],
-    access_token: "",
+    access_token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbkBtYWlsLmNvbSIsImlhdCI6MTYzNDU5NTU0OH0.2bLdroA0N6L-xNoJbJlfX6ws0MMbMkSotge99SwmRYY",
     payloadCreate : {},
     userDonations: [],
     detailDonation: {}
