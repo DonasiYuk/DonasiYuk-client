@@ -12,7 +12,6 @@ export default function Login({ navigation }) {
     const [password, onChangePassword] = useState("")
 
     function loginBtn() {
-
         dispatch(actionLogin({
             email,
             password
@@ -28,7 +27,7 @@ export default function Login({ navigation }) {
             })// prevent back
         })
         .catch((err)=>{
-            console.log(err.message);
+            console.log(err);
         })
 
     }

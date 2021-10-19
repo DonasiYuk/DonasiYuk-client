@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from "react"
 import { useDispatch,useSelector } from "react-redux"
-import { ScrollView, Text, TextInput, StyleSheet, Button } from "react-native"
-import * as Location from 'expo-location';
+import { ScrollView, Text, TextInput, StyleSheet, Button, Image } from "react-native"
+import * as Location from 'expo-location'
+import * as ImagePicker from 'expo-image-picker'
 import Upload from "../components/Upload"
-import { actionCreate } from '../stores/actions/actionDonation'
+import { actionCreate, setDonations } from '../stores/actions/actionDonation'
 
 export default function Create() {
     const dispatch = useDispatch()
     const [payload, setPayload] = useState({})
+    const [image, setImage] = useState(null)
+    const [localUri, setLocalUri] = useState(null)
+    const [filename, setFilename] = useState(null)
+    const [type, setType] = useState(null)
 
     useEffect(() => {
         (async () => {
@@ -22,12 +27,37 @@ export default function Create() {
         })();
     }, []);
 
-    function sendData(data) {
-        dispatch(actionCreate(data))
+    function submit() {
+        let formData = new FormData();
+        // Assume "photo" is the name of the form field the server expects
+        formData.append('image', { uri: localUri, name: filename, type });
+        formData.append('title', payload.title);
+        formData.append('description', payload.description);
+        formData.append('targetAmount', payload.targetAmount);
+        formData.append('lat', payload.lat);
+        formData.append('long', payload.long);
+
+        dispatch(actionCreate(formData))
     }
 
     function getImage(image){
         setPayload({...payload, imgUrl : image})
+    }
+
+    async function PickImage() {
+        let result = await ImagePicker.launchImageLibraryAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.All,
+          allowsEditing: true,
+          aspect: [4,3],
+          quality: 1
+        })
+        console.log(result)
+        if(!result.cancelled){
+            setImage(result.uri)
+            setLocalUri(result.uri)
+            setFilename(result.uri.split('/').pop())
+            setType(result.type)
+        }
     }
 
     return (
@@ -35,7 +65,7 @@ export default function Create() {
             <Text>{JSON.stringify(payload)}</Text>
             <Text style={styles.text}>Title</Text>
             <TextInput style={styles.input}
-                onChangeText={(text) => setPayload({ ...payload, username: text })}
+                onChangeText={(text) => setPayload({ ...payload, title: text })}
                 name="title"
                 placeholder="title" />
             <Text style={styles.text}>Description</Text>
@@ -53,12 +83,16 @@ export default function Create() {
                 onChangeText={(text) => setPayload({ ...payload, balance: text })}
                 name="balance"
                 placeholder="Balance" />
-            <Upload
-                sendData={getImage}
-            />
+            {image && <Image source={{uri:image}} style={{
+                    width:200,
+                    height:200,
+                    borderRadius: 10,
+                    marginVertical: 10
+            }}/>}
+            <Button title="Choose Image" onPress={PickImage}/>
             <Button
                 title="Submit"
-                onPress={() => sendData(payload)}
+                onPress={submit}
             />
         </ScrollView>
     )

@@ -1,8 +1,7 @@
 import axios from 'axios'
 import { SET_USER_DONATIONS } from '../actionType'
 
-// const baseUrl = 'http://192.168.1.2:3000'
-const baseUrl = 'http://10.0.2.2:3000'
+const baseUrl = 'http://192.168.1.12:3000'
 
 export function setUserDonations(data) {
     return {
@@ -20,7 +19,6 @@ export function fetchUserDonations(access_token) {
             headers: { access_token }
         })
             .then(res => {
-                console.log(res.data);
                 dispatch(setUserDonations(res.data))
             })
             .catch(console.log())

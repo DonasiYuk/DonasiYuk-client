@@ -8,6 +8,7 @@ import { useFocusEffect } from '@react-navigation/native'
 
 import DonasiSaya from "./DonasiSaya";
 import Create from "./Create";
+import Profile from "./Profile"
 
 function DonationList({ navigation }) {
     const dispatch = useDispatch()
@@ -26,8 +27,8 @@ function DonationList({ navigation }) {
                 data={donations}
                 renderItem={({ item }) => (
                     <TouchableOpacity onPress={() => {
-                        navigation.navigate('DetaiPage', {
-                            id: item.id
+                        navigation.navigate('Detail', {
+                            itemData: item
                         })
                     }}>
 
@@ -58,11 +59,38 @@ function DonationList({ navigation }) {
 
 export default function HomePage() {
     const Tab = createBottomTabNavigator()
-    return (
-        <Tab.Navigator>
-            <Tab.Screen name="DonationList" component={DonationList} />
-            <Tab.Screen name="DonasiSaya" component={DonasiSaya} />
-            <Tab.Screen name="Create" component={Create} />
+    return(
+        <Tab.Navigator
+            screenOptions={{
+                // showLabel: false,
+                tabBarStyle: {
+                    position: 'absolute',
+                    bottom: 25,
+                    left: 20,
+                    right: 20,
+                    elevation: 0,
+                    backgroundColor: '#3DB2FF',
+                    borderRadius: 20,
+                    height: 90,
+                    shadowColor: "#000",
+                    shadowOffset: {
+                        width: 0,
+                        height: 2,
+                    },
+                    shadowOpacity: 0.25,
+                    shadowRadius: 4,
+                    elevation: 5,
+                },
+                tabBarActiveTintColor: 'white',
+                tabBarInactiveTintColor: 'black',
+            }}
+        >
+            <Tab.Screen name="Donations" 
+                component={DonationList} 
+                options={{ headerStyle: { backgroundColor: '#3DB2FF' }, headerTitleStyle: { color: 'white' }}} 
+            />
+            <Tab.Screen name="Donasi Saya" component={DonasiSaya} options={{ headerStyle: { backgroundColor: '#3DB2FF' }, headerTitleStyle: { color: 'white' }}} />
+            <Tab.Screen name="Create" component={Create} options={{ headerStyle: { backgroundColor: '#3DB2FF' }, headerTitleStyle: { color: 'white' }}} />
         </Tab.Navigator>
     )
 }
