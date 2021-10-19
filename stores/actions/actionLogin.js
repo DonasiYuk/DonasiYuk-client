@@ -1,9 +1,7 @@
 import axios from 'axios'
 import { SETTOKEN } from '../actionType'
 
-// const baseUrl = 'http://192.168.1.2:3000'
-// const baseUrl = 'http://10.0.2.2:3000'
-const baseUrl = 'http://192.168.100.4:3000'
+const baseUrl = 'http://192.168.1.12:3000'
 
 export function setLogin(token) {
     return {

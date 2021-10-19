@@ -4,9 +4,7 @@ import axios from 'axios'
 
 // const access_token = useSelector(state => state.access_token);
 
-// const baseUrl = "http://192.168.1.2:3000"
-// const baseUrl = 'http://10.0.2.2:3000'
-const baseUrl = 'http://192.168.100.4:3000'
+const baseUrl = "http://192.168.1.12:3000"
 
 export function setCreate(payload) {
     return {
@@ -19,7 +17,7 @@ export function actionCreate(data) {
     return function (dispatch, getState) {
         const { access_token, donations } = getState();
 
-        return axios({
+        axios({
             url: `${baseUrl}/donations`,
             method: 'post',
             data,
@@ -28,6 +26,10 @@ export function actionCreate(data) {
                 "Content-Type": "multipart/form-data",
             }
         })
+        .then((res) => {
+            dispatch(setDonations(donations.concat(res.data.newDonation)))
+        })
+        .catch(err => console.log(err))
     }
 }
 

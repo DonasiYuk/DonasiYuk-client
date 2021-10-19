@@ -6,6 +6,7 @@ import {
     Text,
     Modal,
     Pressable,
+    Image
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { useDispatch, useSelector } from "react-redux";
@@ -26,7 +27,7 @@ export default function DonasiSaya({ navigation }) {
 
     function withdraw() {
         axios({
-            url: `http://192.168.1.2:3000/withdraw/${donationId}`,
+            url: `http://192.168.1.12:3000/withdraw/${donationId}`,
             method: 'put',
             headers: { access_token }
         })
@@ -116,7 +117,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: "center",
         backgroundColor: "#fff",
-        padding: 10
+        // padding: 10
         //   justifyContent: 'center',
     },
     card: {
@@ -125,15 +126,15 @@ const styles = StyleSheet.create({
         // alignItems: 'center',
         justifyContent: "center",
         marginTop: 10,
-        marginBottom: 10,
-        height: 200,
+        marginBottom: 5,
+        height: 170,
         width: 350,
         borderRadius: 10,
         backgroundColor: "#fff",
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
-            height: 1,
+            height: 2,
         },
         shadowOpacity: 0.22,
         shadowRadius: 2.22,
@@ -143,7 +144,7 @@ const styles = StyleSheet.create({
     title: {
         marginBottom: 10,
         fontWeight: "bold",
-        fontSize: 20,
+        fontSize: 15,
     },
     centeredView: {
         flex: 1,
@@ -173,10 +174,10 @@ const styles = StyleSheet.create({
         elevation: 2,
     },
     buttonOpen: {
-        backgroundColor: "#F194FF",
+        backgroundColor: "#d9138a",
     },
     buttonClose: {
-        backgroundColor: "#2196F3",
+        backgroundColor: "#3DB2FF",
     },
     textStyle: {
         color: "white",

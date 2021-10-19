@@ -4,7 +4,7 @@ import { ScrollView, Text, TextInput, StyleSheet, Button, Image } from "react-na
 import * as Location from 'expo-location'
 import * as ImagePicker from 'expo-image-picker'
 import Upload from "../components/Upload"
-import { actionCreate } from '../stores/actions/actionDonation'
+import { actionCreate, setDonations } from '../stores/actions/actionDonation'
 
 export default function Create() {
     const dispatch = useDispatch()
@@ -38,10 +38,6 @@ export default function Create() {
         formData.append('long', payload.long);
 
         dispatch(actionCreate(formData))
-            .then((res) => {
-                dispatch(setDonations(donations.concat(res.data.newDonation)))
-            })
-            .catch(err => console.log(err))
     }
 
     function getImage(image){
