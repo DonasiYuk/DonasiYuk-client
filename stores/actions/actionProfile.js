@@ -26,7 +26,6 @@ export function getUserProfile(access_token){
           })
           .then(res => {
             dispatch(setUserProfile(res.data))
-            console.log(res.data, '<<< ini data di action')
           })
           .catch(err => console.log(err, '<<< ini error'))
     }
