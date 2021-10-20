@@ -78,7 +78,7 @@ export default function DonasiSaya({ navigation }) {
                 data={userDonations}
                 renderItem={({ item }) => (  
                     <View style={styles.card}>
-                        <Text style={styles.title}>{item.title}</Text>
+                        <Text numberOfLines={1} style={styles.title}>{item.title}</Text>
                         <Text style={{ marginBottom: 10 }}>{item.User.username}</Text>
                         <Text style={{ textAlign: "left" }}>Terkumpul</Text>
                         <View style={{ flexDirection: "row" }}>
