@@ -83,7 +83,7 @@ export default function DonasiSaya({ navigation }) {
                         <Text style={{ textAlign: "left" }}>Terkumpul</Text>
                         <View style={{ flexDirection: "row" }}>
                             <Text style={{ textAlign: "left", fontWeight: "bold" }}>
-                                Rp.{item.balance},00 
+                            Rp.{item.balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")},00 
                             </Text>
                             <Text style={{ marginLeft: "auto" }}>{item.status}</Text>
                         </View>

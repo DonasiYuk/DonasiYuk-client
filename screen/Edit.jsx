@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { useDispatch,useSelector } from "react-redux"
-import { ScrollView, Text, TextInput, StyleSheet, Button } from "react-native"
+import { ScrollView, Text, TextInput, StyleSheet, Button, Image, Pressable } from "react-native"
 import Upload from "../components/Upload"
 import { actionCreate } from '../stores/actions/actionDonation'
 
@@ -16,8 +16,14 @@ export default function Edit() {
         setPayload({...payload, imgUrl : image})
     }
 
+
     return (
         <ScrollView>
+            <Image resizeMode='cover' style={styles.pic} source={require('../assets/register.jpg')}/>
+            {/* <Upload
+                style={styles.btn}
+                sendData={getImage}
+            /> */}
             <Text style={styles.text}>Title</Text>
             <TextInput style={styles.input}
                 onChangeText={(text) => setPayload({ ...payload, username: text })}
@@ -33,23 +39,10 @@ export default function Edit() {
                 onChangeText={(text) => setPayload({ ...payload, targetAmount: text })}
                 name="targetAmount"
                 placeholder="Target Amount" />
-            <Text style={styles.text}>LAT LONG MAP</Text>
-            <TextInput style={styles.input}
-                onChangeText={(text) => setPayload({ ...payload, latlong: text })}
-                name="latlong"
-                placeholder="LAT LONG MAP" />
-            <Text style={styles.text}>Balance</Text>
-            <TextInput style={styles.input}
-                onChangeText={(text) => setPayload({ ...payload, balance: text })}
-                name="balance"
-                placeholder="Balance" />
-            <Upload
-                sendData={getImage}
-            />
-            <Button
-                title="Submit"
-                onPress={() => sendData(payload)}
-            />
+            <Pressable style={styles.btn} onPress={() => sendData(payload)}>
+                <Text style={styles.btnText}>SUBMIT</Text>
+            </Pressable>
+            
         </ScrollView>
     )
 }
@@ -60,16 +53,42 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+        backgroundColor:'#F5F5F5'
     },
     input: {
         padding : 10,
         marginBottom: 20,
+        marginLeft:46,
         borderWidth: 1,
-
+        borderRadius:20,
+        borderColor: '#fff',
+        width: 300,
+        textAlign:'center',
+        backgroundColor:'#fff'
     },
     text:{
         textAlign:"center",
         padding: 10,
         fontWeight:'bold'
+    },
+    pic:{
+        width:300,
+        height:200,
+        marginLeft:45,
+        borderRadius:10
+    },
+    btn:{
+        borderWidth:1,
+        borderRadius:30,
+        borderColor: '#3DB2FF',
+        height:40,
+        width:300,
+        marginLeft:45,
+        backgroundColor: '#3DB2FF'
+    },
+    btnText:{
+        color:'#fff',
+        textAlign:'center',
+        marginTop:8
     }
 });
