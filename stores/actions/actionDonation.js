@@ -74,3 +74,19 @@ export function getDetailDonation(id) {
             .catch(err => console.log(err))
     }
 }
+
+export function editDonation(data, id) {
+    return function (dispatch, getState) {
+        const { access_token, donations } = getState();
+
+        return axios({
+            url: `${baseUrl}/donations/${id}`,
+            method: 'put',
+            data,
+            headers: { 
+                access_token,
+                "Content-Type": "multipart/form-data",
+            }
+        })
+    }
+}

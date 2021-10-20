@@ -2,47 +2,61 @@ import React, { useState } from "react"
 import { useDispatch,useSelector } from "react-redux"
 import { ScrollView, Text, TextInput, StyleSheet, Button } from "react-native"
 import Upload from "../components/Upload"
-import { actionCreate } from '../stores/actions/actionDonation'
+import { actionCreate, editDonation } from '../stores/actions/actionDonation'
 
-export default function Edit() {
+export default function Edit({ navigation }) {
+    const itemData = route.params.itemData;
     const dispatch = useDispatch()
     const [payload, setPayload] = useState({})
+    const [title, setTitle] = useState("")
+    const [description, setDescription] = useState("")
+    const [targetAmount, setTargetAmount] = useState("")
+    const [image, setImage] = useState("")
 
-    function sendData(data) {
-        dispatch(actionCreate(data))
+    useEffect(() => {
+        setTitle(itemData.title)
+        setDescription(itemData.description)
+        setTargetAmount(itemData.targetAmount)
+        setImage(itemData.image)
+    }, [])
+
+    function sendData() {
+        const data = { title, description, targetAmount, lat: itemData.lat, long: itemData.long}
+        dispatch(editDonation(data, itemData.id))
+            .then(() => {
+                navigation.navigate('Donasi Saya')
+                reset()
+            })
+            .catch(console.log())
     }
 
-    function getImage(image){
-        setPayload({...payload, imgUrl : image})
+    function reset() {
+        setTitle("")
+        setDescription("")
+        setTargetAmount("")
     }
 
     return (
         <ScrollView>
             <Text style={styles.text}>Title</Text>
             <TextInput style={styles.input}
-                onChangeText={(text) => setPayload({ ...payload, username: text })}
+                value={title}
+                onChangeText={(text) => setTitle(text)}
                 name="title"
                 placeholder="title" />
             <Text style={styles.text}>Description</Text>
             <TextInput style={styles.input}
-                onChangeText={(text) => setPayload({ ...payload, description: text })}
+                value={description}
+                onChangeText={(text) => setDescription(text)}
                 name="description"
                 placeholder="description" />
             <Text style={styles.text}>Target Amount</Text>
             <TextInput style={styles.input}
-                onChangeText={(text) => setPayload({ ...payload, targetAmount: text })}
+                value={targetAmount}
+                keyboardType='numeric'
+                onChangeText={(text) => setTargetAmount(text)}
                 name="targetAmount"
                 placeholder="Target Amount" />
-            <Text style={styles.text}>LAT LONG MAP</Text>
-            <TextInput style={styles.input}
-                onChangeText={(text) => setPayload({ ...payload, latlong: text })}
-                name="latlong"
-                placeholder="LAT LONG MAP" />
-            <Text style={styles.text}>Balance</Text>
-            <TextInput style={styles.input}
-                onChangeText={(text) => setPayload({ ...payload, balance: text })}
-                name="balance"
-                placeholder="Balance" />
             <Upload
                 sendData={getImage}
             />

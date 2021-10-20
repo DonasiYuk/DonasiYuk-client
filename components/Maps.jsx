@@ -41,7 +41,7 @@ export default function Maps({ dataLocation }) {
                 <MapView
                     style={{
                         width: "100%",
-                        height: 200,
+                        height: 250,
                         marginTop: 10,
                         borderRadius: 10
                     }}

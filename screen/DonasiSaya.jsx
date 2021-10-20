@@ -114,7 +114,7 @@ export default function DonasiSaya({ navigation }) {
                             </View>
                             {
                                 item.status === 'incomplete' ? <Pressable
-                                    style={[styles.button, styles.buttonOpen]}
+                                    style={[styles.button, {backgroundColor: "#d9138a"}]}
                                     onPress={() => {
                                         setDonationId(item.id)
                                         setModalVisible(true)
@@ -122,7 +122,7 @@ export default function DonasiSaya({ navigation }) {
                                 >
                                     <Text style={styles.textStyle}>Withdraw</Text>
                                 </Pressable> : <Pressable
-                                style={[styles.button, styles.buttonOpen]}
+                                style={[styles.button, { backgroundColor: '#3DB2FF'}]}
                                 onPress={()=> navigation.navigate('ReportForm', {donationId: item.id})}
                                 >
                                     <Text style={styles.textStyle}>Send Report</Text>
