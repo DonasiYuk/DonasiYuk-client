@@ -3,8 +3,8 @@ import { useDispatch,useSelector } from "react-redux"
 import { ScrollView, Text, TextInput, StyleSheet, Button, Image, Pressable, View, TouchableOpacity } from "react-native"
 import * as Location from 'expo-location'
 import * as ImagePicker from 'expo-image-picker'
-import Upload from "../components/Upload"
 import { actionCreate, setDonations } from '../stores/actions/actionDonation'
+import Maps from "../components/Maps"
 
 export default function Create({ navigation }) {
     const dispatch = useDispatch()
@@ -17,7 +17,10 @@ export default function Create({ navigation }) {
     const [localUri, setLocalUri] = useState(null)
     const [filename, setFilename] = useState(null)
     const [type, setType] = useState(null)
-    const [location, setLocation] = useState({})
+    const [location, setLocation] = useState({
+        lat : 0,
+        long : 0
+    })
     const donations = useSelector(state => state.donations)
 
     useEffect(() => {
@@ -68,7 +71,6 @@ export default function Create({ navigation }) {
           aspect: [4,3],
           quality: 1
         })
-        // console.log(result)
         if(!result.cancelled){
             setImage(result.uri)
             setLocalUri(result.uri)
@@ -106,11 +108,11 @@ export default function Create({ navigation }) {
                 >
                     <Text style={styles.text}>Choose Image</Text>
                 </Pressable>
-                {/* <View>
-                    <Maps dataLocation={payload} />
-                </View> */}
+                <View>
+                    <Maps dataLocation={location} />
+                </View>
                 <Pressable
-                    style={styles.btn}
+                    style={styles.submit}
                     onPress={submit}
                 >
                     <Text style={styles.text}>Submit</Text>
@@ -160,5 +162,13 @@ const styles = StyleSheet.create({
         padding: 10,
         elevation: 2,
         backgroundColor: "#3DB2FF",
+    },
+    submit : {
+        margin: 10,
+        borderRadius: 10,
+        padding: 10,
+        elevation: 2,
+        backgroundColor: "#3DB2FF",
+        marginBottom : 150
     }
 });
