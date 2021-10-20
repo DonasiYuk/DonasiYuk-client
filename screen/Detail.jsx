@@ -89,7 +89,7 @@ export default function DetailPage({ route, navigation }) {
                 <TriggeringView style={newStyles.section}>
                     <View>
                         <Text style={newStyles.title}>{itemData.title}</Text>
-                        <Text style={newStyles.sectionContent}>Rp.{Number(itemData.balance).toLocaleString("id-ID")},00 from Rp.{Number(itemData.targetAmount).toLocaleString("id-ID")},00</Text>
+                        <Text style={newStyles.sectionContent}>Rp.{itemData.balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")},00 from Rp.{itemData.targetAmount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")},00</Text>
                         <Text style={{ color: 'blue'}}>{itemData.User.username}</Text>
                         <Pressable
                             style={[styles.button, styles.buttonOpen]}

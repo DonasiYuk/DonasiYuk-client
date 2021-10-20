@@ -20,7 +20,6 @@ export default function Register({navigation}) {
             address
         }))
         .then(()=>{
-            console.log('masuk');
             navigation.navigate('Login')
         })
         .catch((err)=>{

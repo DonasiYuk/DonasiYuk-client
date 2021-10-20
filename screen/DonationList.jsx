@@ -19,7 +19,9 @@ function DonationList({ navigation }) {
     
           return dispatch(setDonationsAsync())
         }, [dispatch])
-    );
+      );
+
+     
     
     return (
         <SafeAreaView style={styles.container}>
@@ -45,7 +47,7 @@ function DonationList({ navigation }) {
                             <Text >Terkumpul</Text>
                             <View style={{ flexDirection: "row" }}>
                                 <Text style={{ textAlign: "left", fontWeight: "bold" }}>
-                                    Rp.{item.balance},00
+                                Rp.{item.balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")},00
                                 </Text>
                             </View>
                             </View>

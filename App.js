@@ -26,7 +26,6 @@ export default function App() {
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="Register" component={Register} />
           <Stack.Screen name="Create" component={Create} options={{ headerStyle: { backgroundColor: '#3DB2FF' }, headerTitleStyle: { color: 'white' }}} />
-          <Stack.Screen name="Edit" component={Edit} />
           <Stack.Screen name="Donasi Saya" component={DonasiSaya} options={{ headerStyle: { backgroundColor: '#3DB2FF' }, headerTitleStyle: { color: 'white' }}} />
           <Stack.Screen name="HomePage" component={HomePage} options={{ headerShown: false }}/>
           <Stack.Screen name="ReportForm" component={ReportForm} />
@@ -41,6 +40,7 @@ export default function App() {
             })}
           />
           <Stack.Screen name="History Transaction" component={HistoryTransaction} options={{ headerStyle: { backgroundColor: '#3DB2FF' }, headerTitleStyle: { color: 'white' }}} />
+          <Stack.Screen name="Edit" component={Edit} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

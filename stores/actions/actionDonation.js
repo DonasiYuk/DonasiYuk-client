@@ -78,14 +78,13 @@ export function getDetailDonation(id) {
 export function editDonation(data, id) {
     return function (dispatch, getState) {
         const { access_token, donations } = getState();
-
+        console.log(data, id, '<<<<<<<<<<<');
         return axios({
             url: `${baseUrl}/donations/${id}`,
-            method: 'put',
+            method: 'PUT',
             data,
             headers: { 
                 access_token,
-                "Content-Type": "multipart/form-data",
             }
         })
     }

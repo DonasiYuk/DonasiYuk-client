@@ -24,7 +24,6 @@ export default function DonasiSaya({ navigation }) {
 
     useFocusEffect(
         React.useCallback(() => {
-    
           return dispatch(fetchUserDonations(access_token))
         }, [dispatch])
     );
@@ -104,7 +103,19 @@ export default function DonasiSaya({ navigation }) {
                     renderItem={({ item }) => (  
                         <View style={styles.card}>
                             <Text numberOfLines={1} style={styles.title}>{item.title}</Text>
-                            <Text style={{ marginBottom: 10 }}>{item.User.username}</Text>
+                            <View style={{ flexDirection: "row" }}>
+                                <Text style={{ marginBottom: 10 }}>{item.User.username}</Text>
+                                <Pressable 
+                                    style={{ marginLeft: "auto" }}
+                                    onPress={() => {
+                                        navigation.navigate('Edit', {
+                                            itemData: item
+                                        })
+                                    }}
+                                >
+                                    <Text style={{ color: 'blue'}}>Edit</Text>
+                                </Pressable>
+                            </View>
                             <Text style={{ textAlign: "left" }}>Terkumpul</Text>
                             <View style={{ flexDirection: "row" }}>
                                 <Text style={{ textAlign: "left", fontWeight: "bold" }}>
