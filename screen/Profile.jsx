@@ -4,10 +4,12 @@ import { StyleSheet, SafeAreaView, Text, View, Platform, Button, Image, ImageBac
 import { useDispatch, useSelector } from 'react-redux'
 import { getUserProfile } from '../stores/actions/actionProfile'
 import { setLogin } from '../stores/actions/actionLogin'
-import { FontAwesome, MaterialIcons, Feather } from '@expo/vector-icons';
+import { FontAwesome, MaterialIcons, Feather, FontAwesome5 } from '@expo/vector-icons';
 
 export default function Profile({navigation}) {
     const access_token = useSelector((state) => state.access_token)
+    const userDonations = useSelector(state => state.userDonations);
+    const totalDonation = userDonations.length
     const user = useSelector((state) => state.userProfile)
     const dispatch = useDispatch()
 
@@ -28,28 +30,42 @@ export default function Profile({navigation}) {
                 <ImageBackground source={{uri:'https://wallpaperaccess.com/full/1385507.jpg'}} 
                 style={{
                     flex: 1,
-                    margin: 0,
+                    marginTop: 0,
                     flexDirection: 'column',
-                    width: 315,
-                    height: 250,
+                    width: 320,
+                    height: 280,
                     justifyContent: 'center',
                     alignItems : 'center',
-                    borderRadius: 10,
-                    opacity: 50
+                    borderRadius: 50,
+                    opacity: 50,
                 }}>
                 
                 <Image source={{uri:'https://www.pngkey.com/png/detail/157-1575183_aang-png-pic-avatar-the-legend-of-aang.png'}} 
                 style={styles.avatar}/>
                 <Text style={styles.name}>{user?.username}</Text>
-                <Text style={styles.address}><FontAwesome name="map-marker" size={24} color="white" /> {user?.address}</Text>
+                <Text style={styles.address}><FontAwesome name="map-marker" size={20} color="white" /> {user?.address}</Text>
+                <Text style={styles.count}><FontAwesome5 name="coins" size={16} color="white" />  {totalDonation} Donations</Text>
                 </ImageBackground>
             </View>
+            <View style={styles.titleCard}>
+                <Text style={styles.title}>User Contact :</Text>
+            </View>
            {
-               user.phoneNumber ? <Text style={styles.phoneNumber}><Feather name="phone-call" size={24} color="blue" /> {user?.phoneNumber}</Text> 
-               : <Text style={styles.phoneNumber}><Feather name="phone-call" size={24} color="blue" /> Phone Unregistered</Text>
+               user.phoneNumber ? <View style={styles.contactCard}>
+                <Text><Feather name="phone-call" size={20} color="#0066CC" />    </Text>
+                <Text style={styles.phoneNumber}>{user.phoneNumber}</Text>
+               </View>
+               : 
+               <View style={styles.contactCard}>
+                <Text><Feather name="phone-call" size={20} color="#0066CC" />    </Text>
+                <Text style={styles.phoneNumber}>Phone Unregistered</Text>
+               </View>
            } 
+           <View style={styles.contactCard}>
+                <Text><MaterialIcons name="email" size={20} color="#0066CC" />    </Text>
+                <Text style={styles.email}>{user?.email}</Text>
+            </View>
            
-          <Text style={styles.email}><MaterialIcons name="email" size={24} color="blue" /> {user?.email}</Text> 
           <Pressable style={styles.logout} onPress={logout}>
                 <Text style={styles.textBtn}>Log Out</Text>
             </Pressable>
@@ -65,30 +81,75 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
+        paddingTop:0
       },
       card: {
         flexDirection: 'column',
-        backgroundColor: 'whitesmoke',
+        backgroundColor: 'white',
         padding: 0,
         marginTop: 0,
-        height: 570,
+        height: 500,
         width: 320,
+        alignItems: 'center',
+        borderRadius: 20,
+        borderColor: 'white',
+        borderWidth: 0,
+        shadowColor: "#fff",
+        shadowOffset: {
+          width: 0,
+          height: 3,
+        },
+        shadowOpacity: 0.29,
+        shadowRadius: 4.65,
+        
+        elevation: 7,
+      },
+      topCard:{
+        flexDirection: 'column',
+        backgroundColor: 'white',
+        padding: 0,
+        marginTop: 0,
+        height: 280,
+        width: 320,
+        alignItems: 'center',
+        borderRadius: 20,
+        borderColor: 'white',
+        borderWidth: 0
+      },
+      contactCard:{
+        margin: 10,
+        flexDirection: 'row',
+        backgroundColor: 'white',
+        padding: 5,
+        marginTop: 0,
+        height: 30,
+        width: 300,
         alignItems: 'center',
         borderRadius: 20,
         borderColor: 'white',
         borderWidth: 3
       },
-      topCard:{
-        flexDirection: 'column',
-        backgroundColor: 'whitesmoke',
-        padding: 0,
-        marginTop: 0,
-        height: 250,
-        width: 320,
+      titleCard:{
+        margin: 5,
+        flexDirection: 'row',
+        backgroundColor: '#0066CC',
+        padding: 5,
+        marginTop: 15,
+        height: 35,
+        width: 300,
         alignItems: 'center',
-        borderRadius: 20,
-        borderColor: 'white',
-        borderWidth: 3
+        borderRadius: 10,
+        borderColor: '#0066CC',
+        borderWidth: 3,
+        shadowColor: "#fff",
+        shadowOffset: {
+          width: 0,
+          height: 3,
+        },
+        shadowOpacity: 0.29,
+        shadowRadius: 4.65,
+        
+        elevation: 7,
       },
       avatar:{
         width:150,
@@ -105,28 +166,36 @@ const styles = StyleSheet.create({
       },
       address:{
         color: "whitesmoke",
-        fontSize: 18
+        fontSize: 14
+      },
+      count:{
+        marginTop: 3,
+        color: "whitesmoke",
+        fontSize: 14
       },
       phoneNumber:{
-        marginTop: 30,
         color: "black",
-        fontSize: 24,
-        fontWeight: "bold"
+        fontSize: 16,
+        fontWeight: "700"
       },
       email: {
-        marginTop: 30,
         color: "black",
-        fontSize: 24,
+        fontSize: 16,
+        fontWeight: "700"
+      },
+      title: {
+        color: "white",
+        fontSize: 20,
         fontWeight: "bold"
       },
       logout:{
         borderWidth:1,
         borderRadius:30,
-        width:300,
+        width:150,
         height:40,
-        marginTop: 140,
-        backgroundColor: '#3DB2FF',
-        borderColor:'#3DB2FF'
+        marginTop: 30,
+        backgroundColor: '#d9138a',
+        borderColor:'#d9138a'
     },
     textBtn:{
         textAlign:'center',
