@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { useDispatch } from "react-redux"
-import { View, Text, TextInput, Pressable, StyleSheet, Image } from "react-native"
+import { View, Text, TextInput, Pressable, StyleSheet, Image, KeyboardAvoidingView } from "react-native"
 import { register } from '../stores/actions/actionRegister'
 
 export default function Register({navigation}) {
@@ -20,6 +20,7 @@ export default function Register({navigation}) {
             address
         }))
         .then(()=>{
+            console.log('masuk');
             navigation.navigate('Login')
         })
         .catch((err)=>{
@@ -29,6 +30,7 @@ export default function Register({navigation}) {
 
     return (
         <View style={styles.container}>
+            <KeyboardAvoidingView behavior='position' >
             <View style={styles.topContainer}>
                 <Image style={styles.img} source={require('../assets/register.jpg')}/>
             </View>
@@ -63,6 +65,7 @@ export default function Register({navigation}) {
                 <Text style={styles.btnText}>Submit</Text>
             </Pressable>
             </View>
+            </KeyboardAvoidingView>
         </View>
     )
 }

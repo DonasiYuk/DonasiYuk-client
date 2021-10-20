@@ -92,6 +92,7 @@ export default function HomePage() {
             />
             <Tab.Screen name="Donasi Saya" component={DonasiSaya} options={{ headerStyle: { backgroundColor: '#3DB2FF' }, headerTitleStyle: { color: 'white' }}} />
             <Tab.Screen name="Create" component={Create} options={{ headerStyle: { backgroundColor: '#3DB2FF' }, headerTitleStyle: { color: 'white' }}} />
+            <Tab.Screen name="Profile" component={Profile} options={{ headerStyle: { backgroundColor: '#3DB2FF' }, headerTitleStyle: { color: 'white' }}} />
         </Tab.Navigator>
     )
 }
