@@ -18,7 +18,6 @@ export default function DetailPage({ route, navigation }) {
     const [amount, setAmount] = useState(0)
     const [midtrans, setMidtrans] = useState("")
 
-    const [midtrans, setMidtrans] = useState("")
 
     function payDonation(id) {
       console.log(id);
@@ -56,23 +55,24 @@ export default function DetailPage({ route, navigation }) {
                     setModalVisible(!modalVisible);
                 }}
             >
-                <View style={styles.centeredView}>
-                    <View style={styles.modalView}>
-                        <TextInput style={styles.modalText} onChangeText={setAmount} value={amount} />
+                <View style={newStyles.centeredView}>
+                    <View style={newStyles.modalView}>
+                        <Text>Masukan jumlah donasi yang anda ingin donasikan </Text>
+                        <TextInput style={newStyles.modalText} onChangeText={setAmount} value={amount} />
                         <View style={{ flexDirection: "row" }}>
                             <Pressable
-                                style={[styles.button, styles.buttonClose]}
+                                style={[newStyles.button, newStyles.buttonClose]}
                                 onPress={() => setModalVisible(!modalVisible)}
                             >
-                                <Text style={styles.textStyle}>Cancel</Text>
+                                <Text style={newStyles.textStyle}>Cancel</Text>
                             </Pressable>
                             <Pressable
-                                style={[styles.button, styles.buttonClose]}
+                                style={[newStyles.button, newStyles.buttonClose]}
                                 onPress={async () => {
                                     payDonation(itemData?.id)
                                 }}
                             >
-                                <Text style={styles.textStyle}>Donate</Text>
+                                <Text style={newStyles.textStyle}>Donate</Text>
                             </Pressable>
                         </View>
                     </View>
@@ -170,5 +170,48 @@ const newStyles = StyleSheet.create({
     },
     sectionLarge: {
       minHeight: 300,
+    },
+    centeredView: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: 22,
+    },
+    modalView: {
+        margin: 20,
+        backgroundColor: "white",
+        borderRadius: 20,
+        padding: 35,
+        alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+    },
+    button: {
+        margin: 10,
+        borderRadius: 10,
+        padding: 10,
+        elevation: 2,
+    },
+    buttonClose: {
+        backgroundColor: "#3DB2FF",
+    },
+    textStyle: {
+        color: "white",
+        fontWeight: "bold",
+        textAlign: "center",
+    },
+    modalText: {
+        marginBottom: 10,
+        marginTop: 10,
+        textAlign: "center",
+        borderWidth:1,
+        borderRadius:10,
+        width:250
     },
 });

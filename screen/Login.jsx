@@ -3,6 +3,7 @@ import { TextInput, View, Text, Pressable, StyleSheet, Image, KeyboardAvoidingVi
 import { useDispatch, useSelector } from 'react-redux'
 import { actionLogin, setLogin } from '../stores/actions/actionLogin'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { Entypo } from '@expo/vector-icons'
 
 
 
@@ -10,6 +11,10 @@ export default function Login({ navigation }) {
     const dispatch = useDispatch()
     const [email, onChangeEmail] = useState("")
     const [password, onChangePassword] = useState("")
+    let [secure, setSecure] = useState({
+        icon:'eye-with-line',
+        text: true
+    })
 
     function loginBtn() {
         dispatch(actionLogin({
@@ -32,15 +37,29 @@ export default function Login({ navigation }) {
 
     }
 
+    function updateSecureText() {
+        if (secure.text) {
+            setSecure({
+                icon:'eye',
+                text:false
+            })
+        } else{
+            setSecure({
+                icon:'eye-with-line',
+                text:true
+            })
+        }
+    } 
 
     return (
         <View style={styles.container}>
-            <KeyboardAwareScrollView 
+            {/* <KeyboardAwareScrollView 
                 style={{ backgroundColor: '#3DB2FF' }}
                 resetScrollToCoords={{ x: 0, y: 0 }}
                 contentContainerStyle={styles.container}
-                scrollEnabled={false}
-                >
+                scrollEnabled={true}
+                > */}
+                <KeyboardAvoidingView behavior='position' >
             <View>
                 <Image style={styles.picture} source={require('../assets/4851046.jpg')} />
             </View>
@@ -55,14 +74,17 @@ export default function Login({ navigation }) {
                     placeholder="email"
                 />
                 <Text>Password</Text>
+                <View style={styles.action}>
+                <Entypo onPress={updateSecureText} style={styles.icon} name={secure.icon} size={24} color="black" />
                 <TextInput
-                    style={styles.input}
+                    style={styles.textInput}
                     onChangeText={onChangePassword}
                     value={password}
                     placeholder="password"
-                    secureTextEntry={true}
+                    secureTextEntry={secure.text}
                 // underlineColorAndroid="transparent"
                 />
+                </View>
                 <Pressable style={styles.signIn} onPress={loginBtn}>
                     <Text style={styles.textBtn}>Sign In</Text>
                 </Pressable>
@@ -73,7 +95,8 @@ export default function Login({ navigation }) {
                     </Pressable>
                 </View>
             </View>
-            </KeyboardAwareScrollView>
+            </KeyboardAvoidingView>
+            {/* </KeyboardAwareScrollView> */}
         </View>
     );
 
@@ -106,8 +129,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#F5F5F5',
-        // borderTopEndRadius: 80,
-        // borderTopLeftRadius: 80,
         width: 400
     },
     signIn: {
@@ -116,7 +137,8 @@ const styles = StyleSheet.create({
         width: 300,
         height: 40,
         backgroundColor: '#3DB2FF',
-        borderColor: '#3DB2FF'
+        borderColor: '#3DB2FF',
+        marginTop:10
     },
     textBtn: {
         textAlign: 'center',
@@ -135,5 +157,25 @@ const styles = StyleSheet.create({
     regisText: {
         color: '#3DB2FF'
     },
+    action: {
+        flexDirection: 'row-reverse',
+        marginTop: 10,
+        paddingBottom: 5,
+        borderWidth:1,
+        borderRadius:30,
+        borderColor:'#fff',
+        backgroundColor: '#fff',
+        width:300
+    },
+    textInput: {
+        flex: 1,
+        marginTop: Platform.OS === 'ios' ? 0 : 5,
+        color: '#05375a',
+        paddingLeft:120,
+        
+    },
+    icon:{
+        marginTop:10
+    }
 
 });

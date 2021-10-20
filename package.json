@@ -19,6 +19,7 @@
     "expo-image-picker": "^10.2.3",
     "expo-location": "~12.1.2",
     "expo-status-bar": "~1.0.4",
+    "native-base": "^3.2.1",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-42.0.0.tar.gz",
@@ -32,7 +33,10 @@
     "react-native-webview": "11.6.2",
     "react-redux": "^7.2.5",
     "redux": "^4.1.1",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "styled-components": "^5.3.3",
+    "styled-system": "^5.1.5",
+    "react-native-svg": "12.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0"

@@ -34,11 +34,11 @@ function DonationList({ navigation }) {
 
                         <View style={styles.card}>
                             <View style={styles.imgContainer}>
-                                <Image style={styles.imgCard} source={require('../assets/register.jpg')}/>
+                                <Image resizeMode='cover' style={styles.imgCard} source={{uri:item.image}}/>
                             </View>
                             <View style={styles.textContainer}>
 
-                            <Text style={styles.title}>{item.title}</Text>
+                            <Text numberOfLines={1} style={styles.title}>{item.title}</Text>
                             <Text >Terkumpul</Text>
                             <View style={{ flexDirection: "row" }}>
                                 <Text style={{ textAlign: "left", fontWeight: "bold" }}>
@@ -124,7 +124,8 @@ const styles = StyleSheet.create({
     },
     imgCard:{
         width:150,
-        height:150
+        height:150,
+        borderRadius:10
     },
     card: {
         padding: 10,
