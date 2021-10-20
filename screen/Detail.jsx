@@ -40,8 +40,6 @@ export default function DetailPage({ route, navigation }) {
         />)
     }
 
-    
-
     return (
         <View style={newStyles.container}>
           <Modal

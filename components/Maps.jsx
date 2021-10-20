@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { View } from 'react-native'
 import MapView from 'react-native-maps';
 import { Marker } from 'react-native-maps';
-import { useSelector } from "react-redux";
-import * as Location from 'expo-location';
 
 export default function Maps({ dataLocation }) {
+
     const getInitialState = () => {
         return {
             region: {
@@ -17,23 +16,6 @@ export default function Maps({ dataLocation }) {
         };
     }
 
-    // const onRegionChange = (region) => {
-    //     // region ==>> Get location
-    //     /**
-    //      * latitude: -0.789287,
-    //             longitude: 119.869477,
-    //             latitudeDelta: 0.0922,
-    //             longitudeDelta: 0.0421,
-    //      */
-    // }
-
-    // function onMarkerPress(i) {
-    //     console.log('masuk', i)
-    // }
-
-    // /**
-    //  * Explore mmenggunakan toucscreen untuk mendapat data region
-    //  */
 
     return (
         <View>
@@ -46,7 +28,6 @@ export default function Maps({ dataLocation }) {
                         borderRadius: 10
                     }}
                     region={getInitialState().region}
-                    // onRegionChange={onRegionChange}
                 >
                     <Marker
                         coordinate={{
