@@ -65,13 +65,16 @@ export default function Report({navigation, route}) {
       
         <SafeAreaView style={styles.container}>
             <View style={styles.card}>
-            <Text style={styles.formName}>Report Form</Text>
+            <View style={styles.titleCard}>
+                <Text style={styles.formName}>Report Form</Text>
+            </View>
+            
             <Text>Description</Text>
             <TextInput
                 style={styles.input}
                 onChangeText={setDescription}
                 value={description}
-                placeholder="description"
+                placeholder="Type your simple description here"
             />
             {image && <Image source={{uri:image}} style={{
                     width:200,
@@ -111,16 +114,27 @@ const styles = StyleSheet.create({
         height: 570,
         width: 320,
         alignItems: 'center',
-        borderRadius: 20
+        borderRadius: 20,
+        shadowColor: "#fff",
+        shadowOffset: {
+          width: 0,
+          height: 3,
+        },
+        shadowOpacity: 0.29,
+        shadowRadius: 4.65,
+        
+        elevation: 7,
         // justifyContent: 'center',
     },
     formName:{
-        fontSize: 40,
+        fontSize: 35,
         fontWeight: "bold",
+        color: 'whitesmoke'
     },
     input: {
         height: 40,
-        margin: 12,
+        margin: 5,
+        marginTop: 0,
         borderBottomWidth: 1,
         padding: 5,
         color: 'black'
@@ -133,11 +147,36 @@ const styles = StyleSheet.create({
         marginTop:10,
         borderRadius: 4,
         elevation: 3,
-        backgroundColor: '#F194FF',
+        width: 300,
+        backgroundColor: '#3DB2FF',
     },
     buttonText: {
         color: "white",
         fontWeight: "bold",
         textAlign: "center"
+    },
+    titleCard:{
+        margin: 5,
+        flexDirection: 'row',
+        backgroundColor: '#0066CC',
+        padding: 5,
+        marginTop: 1,
+        marginBottom: 20,
+        height: 50,
+        width: 250,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 10,
+        borderColor: '#0066CC',
+        borderWidth: 3,
+        shadowColor: "#fff",
+        shadowOffset: {
+          width: 0,
+          height: 3,
+        },
+        shadowOpacity: 0.29,
+        shadowRadius: 4.65,
+        
+        elevation: 7,
     }
 });
