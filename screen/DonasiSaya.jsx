@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { useDispatch, useSelector } from "react-redux";
+import { useFocusEffect } from '@react-navigation/native'
 import axios from 'axios';
 import { fetchUserDonations } from "../stores/actions/actionDonasiSaya";
 
@@ -21,13 +22,20 @@ export default function DonasiSaya({ navigation }) {
     const access_token = useSelector(state => state.access_token);
     const userDonations = useSelector(state => state.userDonations);
 
-    useEffect(() => {
-        dispatch(fetchUserDonations(access_token))
-    }, [dispatch])
+    useFocusEffect(
+        React.useCallback(() => {
+    
+          return dispatch(fetchUserDonations(access_token))
+        }, [dispatch])
+    );
+
+    // useEffect(() => {
+    //     dispatch(fetchUserDonations(access_token))
+    // }, [dispatch])
 
     function withdraw() {
         axios({
-            url: `http://10.0.2.2:3000/withdraw/${donationId}`,
+            url: `http://192.168.1.12:3000/withdraw/${donationId}`,
             method: 'put',
             headers: { access_token }
         })
@@ -37,41 +45,58 @@ export default function DonasiSaya({ navigation }) {
             .catch(err => console.log(err))
     }
 
+    if (userDonations.length === 0) {
+        return (
+            <View style={{ ...styles.container, justifyContent: 'center'}}>
+                <Text>You don't have any donation</Text>
+                <Pressable
+                    style={[styles.button, styles.buttonOpen]}
+                    onPress={() => {
+                        navigation.navigate('Create')
+                    }}
+                >
+                    <Text style={styles.textStyle}>Create Donation</Text>
+                </Pressable>
+            </View>
+        )
+    }
+
     return (
-        <View style={styles.container}>
-            <Modal
-                animationType="slide"
-                transparent={true}
-                visible={modalVisible}
-                onRequestClose={() => {
-                    Alert.alert("Modal has been closed.");
-                    setModalVisible(!modalVisible);
-                }}
-            >
-                <View style={styles.centeredView}>
-                    <View style={styles.modalView}>
-                        <Text style={styles.modalText}>Beneran mau withdraw nih??? {donationId}</Text>
-                        <View style={{ flexDirection: "row" }}>
-                            <Pressable
-                                style={[styles.button, styles.buttonClose]}
-                                onPress={() => setModalVisible(!modalVisible)}
-                            >
-                                <Text style={styles.textStyle}>gajadi</Text>
-                            </Pressable>
-                            <Pressable
-                                style={[styles.button, styles.buttonClose]}
-                                onPress={async () => {
-                                    withdraw()
-                                    
-                                    setModalVisible(!modalVisible)
-                                }}
-                            >
-                                <Text style={styles.textStyle}>jadiin lah</Text>
-                            </Pressable>
+        <View style={{ flex: 1, backgroundColor: "#fff" }}>
+            <View style={styles.container}>
+                <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={modalVisible}
+                    onRequestClose={() => {
+                        Alert.alert("Modal has been closed.");
+                        setModalVisible(!modalVisible);
+                    }}
+                >
+                    <View style={styles.centeredView}>
+                        <View style={styles.modalView}>
+                            <Text style={styles.modalText}>Beneran mau withdraw nih??? {donationId}</Text>
+                            <View style={{ flexDirection: "row" }}>
+                                <Pressable
+                                    style={[styles.button, styles.buttonClose]}
+                                    onPress={() => setModalVisible(!modalVisible)}
+                                >
+                                    <Text style={styles.textStyle}>gajadi</Text>
+                                </Pressable>
+                                <Pressable
+                                    style={[styles.button, styles.buttonClose]}
+                                    onPress={async () => {
+                                        withdraw()
+                                        
+                                        setModalVisible(!modalVisible)
+                                    }}
+                                >
+                                    <Text style={styles.textStyle}>jadiin lah</Text>
+                                </Pressable>
+                            </View>
                         </View>
                     </View>
-                </View>
-            </Modal>
+                </Modal>
 
             <StatusBar style="auto" />
             <FlatList 
@@ -90,23 +115,16 @@ export default function DonasiSaya({ navigation }) {
                         {
                             item.status === 'incomplete' ? <Pressable
                                 style={[styles.button, styles.buttonOpen]}
-                                onPress={() => {
-                                    setDonationId(item.id)
-                                    setModalVisible(true)
-                                }}
-                            >
-                                <Text style={styles.textStyle}>Withdraw</Text>
-                            </Pressable> : <Pressable
-                            style={[styles.button, styles.buttonOpen]}
-                            onPress={()=> navigation.navigate('ReportForm', {donationId: item.id})}
-                            >
-                                <Text style={styles.textStyle}>Send Report</Text>
-                            </Pressable>
-                        }
-                    </View>
-                )}
-                keyExtractor={item => item.id}
-            />
+                                onPress={()=> navigation.navigate('ReportForm', {donationId: item.id})}
+                                >
+                                    <Text style={styles.textStyle}>Send Report</Text>
+                                </Pressable>
+                            }
+                        </View>
+                    )}
+                    keyExtractor={item => item.id}
+                />
+            </View>
         </View>
     );
 }
@@ -115,7 +133,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: "center",
-        backgroundColor: "#fff",
+        // backgroundColor: "#fff",
+        marginBottom: 100
         // padding: 10
         //   justifyContent: 'center',
     },

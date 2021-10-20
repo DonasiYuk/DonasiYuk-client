@@ -53,7 +53,7 @@ export default function Report({navigation, route}) {
         formData.append('donationId', donationId);
         dispatch(report(formData, access_token))
         .then((res)=>{
-            navigation.navigate('DonasiSaya')
+            navigation.navigate('Donasi Saya')
         })
         .catch((err)=>{
             console.log(err, '??????????')

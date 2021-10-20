@@ -6,7 +6,7 @@ import * as ImagePicker from 'expo-image-picker'
 import Upload from "../components/Upload"
 import { actionCreate, setDonations } from '../stores/actions/actionDonation'
 
-export default function Create() {
+export default function Create({ navigation }) {
     const dispatch = useDispatch()
     const [payload, setPayload] = useState({
         title: "",
@@ -47,6 +47,7 @@ export default function Create() {
             .then((res) => {
                 console.log('berhasil');
                 dispatch(setDonations(donations.concat(res.data.newDonation)))
+                navigation.navigate('Donasi Saya')
                 reset()
             })
             .catch(err => console.log(err))

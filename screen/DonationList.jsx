@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setDonationsAsync } from '../stores/actions/actionDonation'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { useFocusEffect } from '@react-navigation/native'
-
+import { Ionicons } from '@expo/vector-icons';
 import DonasiSaya from "./DonasiSaya";
 import Create from "./Create";
 import Profile from "./Profile"
@@ -36,7 +36,10 @@ function DonationList({ navigation }) {
 
                         <View style={styles.card}>
                             <View style={styles.imgContainer}>
-                                <Image resizeMode='cover' style={styles.imgCard} source={{uri:item.image}}/>
+                                {
+                                    item.image === '' ? <Image resizeMode='cover' style={styles.imgCard} source={{uri:'https://image.freepik.com/free-vector/hand-drawn-clothing-donation-concept_52683-54709.jpg'}}/> : 
+                                    <Image resizeMode='cover' style={styles.imgCard} source={{uri:item.image}}/>
+                                }
                             </View>
                             <View style={styles.textContainer}>
 
@@ -63,8 +66,8 @@ export default function HomePage() {
     const Tab = createBottomTabNavigator()
     return(
         <Tab.Navigator
-            screenOptions={{
-                // showLabel: false,
+            screenOptions={({route}) => ({
+                showLabel: false,
                 tabBarStyle: {
                     // height: 50,
                     position: 'absolute',
@@ -86,7 +89,22 @@ export default function HomePage() {
                 },
                 tabBarActiveTintColor: 'white',
                 tabBarInactiveTintColor: 'black',
-            }}
+                tabBarIcon: ({ focused, color, size }) => {
+                    let iconName;
+
+                    if (route.name === "Donations") {
+                        iconName = focused  ? 'ios-list-outline' : 'ios-list';
+                    } else if (route.name === "Profile") {
+                        iconName = focused  ? 'person-circle-outline' : 'person-circle';
+                    } else if (route.name === "Create") {
+                        iconName = focused  ? 'create-outline' : 'create-outline';
+                    } else if (route.name === "Donasi Saya") {
+                        iconName = focused  ? 'list-circle-outline' : 'list-circle-outline';
+                    }
+
+                    return <Ionicons name={iconName} size={size} color={color} />;
+                }
+            })}
         >
             <Tab.Screen name="Donations" 
                 component={DonationList} 
@@ -94,7 +112,14 @@ export default function HomePage() {
             />
             <Tab.Screen name="Donasi Saya" component={DonasiSaya} options={{ headerStyle: { backgroundColor: '#3DB2FF' }, headerTitleStyle: { color: 'white' }}} />
             <Tab.Screen name="Create" component={Create} options={{ headerStyle: { backgroundColor: '#3DB2FF' }, headerTitleStyle: { color: 'white' }}} />
-            <Tab.Screen name="Profile" component={Profile} options={{ headerStyle: { backgroundColor: '#3DB2FF' }, headerTitleStyle: { color: 'white' }}} />
+            <Tab.Screen name="Profile" component={Profile} options={{ 
+                headerStyle: { backgroundColor: '#3DB2FF' }, 
+                headerTitleStyle: { color: 'white' },
+                headerBackTitleVisible: false,
+                headerTitle: false,
+                headerTransparent: true,
+                headerTintColor: '#fff'
+            }}/>
         </Tab.Navigator>
     )
 }
@@ -104,6 +129,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems:'center',
+        marginBottom: 100
     },
     seacrhBarContainer:{
         backgroundColor:'#3DB2FF'
