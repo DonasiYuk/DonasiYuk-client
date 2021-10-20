@@ -6,7 +6,6 @@ import { useSelector } from "react-redux";
 import { WebView } from 'react-native-webview'
 import axios from "axios";
 
-
 const MIN_HEIGHT = Platform.OS === 'ios' ? 90 : 55;
 const MAX_HEIGHT = 350;
 
@@ -20,9 +19,8 @@ export default function DetailPage({ route, navigation }) {
 
 
     function payDonation(id) {
-      console.log(id);
         axios({
-            url: `http://10.0.2.2:3000/transactions/${id}`,
+            url: `http://192.168.1.12:3000/transactions/${id}`,
             method: 'post',
             headers: { access_token },
             data: { amount }
@@ -91,7 +89,7 @@ export default function DetailPage({ route, navigation }) {
                 <TriggeringView style={newStyles.section}>
                     <View>
                         <Text style={newStyles.title}>{itemData.title}</Text>
-                        <Text style={newStyles.sectionContent}>Rp.{itemData.balance},00 from Rp.{itemData.targetAmount},00</Text>
+                        <Text style={newStyles.sectionContent}>Rp.{Number(itemData.balance).toLocaleString("id-ID")},00 from Rp.{Number(itemData.targetAmount).toLocaleString("id-ID")},00</Text>
                         <Text style={{ color: 'blue'}}>{itemData.User.username}</Text>
                         <Pressable
                             style={[styles.button, styles.buttonOpen]}
