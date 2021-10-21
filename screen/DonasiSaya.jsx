@@ -21,6 +21,7 @@ export default function DonasiSaya({ navigation }) {
     const [donationId, setDonationId] = useState(null);
     const access_token = useSelector(state => state.access_token);
     const userDonations = useSelector(state => state.userDonations);
+    const baseUrl = 'http://10.0.2.2:3000'
 
     useFocusEffect(
         React.useCallback(() => {
@@ -28,13 +29,10 @@ export default function DonasiSaya({ navigation }) {
         }, [dispatch])
     );
 
-    // useEffect(() => {
-    //     dispatch(fetchUserDonations(access_token))
-    // }, [dispatch])
 
     function withdraw() {
         axios({
-            url: `http://192.168.1.12:3000/withdraw/${donationId}`,
+            url: `${baseUrl}/withdraw/${donationId}`,
             method: 'put',
             headers: { access_token }
         })
@@ -119,12 +117,12 @@ export default function DonasiSaya({ navigation }) {
                             <Text style={{ textAlign: "left" }}>Terkumpul</Text>
                             <View style={{ flexDirection: "row" }}>
                                 <Text style={{ textAlign: "left", fontWeight: "bold" }}>
-                                    Rp.{item.balance},00 
+                                Rp.{item.balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")},00 
                                 </Text>
                                 <Text style={{ marginLeft: "auto" }}>{item.status}</Text>
                             </View>
                             {
-                                item.status === 'incomplete' ? <Pressable
+                                item.status !== 'closed' ? <Pressable
                                     style={[styles.button, {backgroundColor: "#d9138a"}]}
                                     onPress={() => {
                                         setDonationId(item.id)

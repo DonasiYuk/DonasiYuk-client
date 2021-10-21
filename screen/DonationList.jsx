@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { View, StyleSheet, Image, SafeAreaView, FlatList, Text, Pressable, TouchableOpacity } from 'react-native'
-import { SearchBar } from 'react-native-elements'
 import { useDispatch, useSelector } from 'react-redux'
 import { setDonationsAsync } from '../stores/actions/actionDonation'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
@@ -13,11 +12,12 @@ import Profile from "./Profile"
 function DonationList({ navigation }) {
     const dispatch = useDispatch()
     const donations = useSelector(state => state.donations)
+    const access_token = useSelector(state => state.access_token);
 
     useFocusEffect(
         React.useCallback(() => {
     
-          return dispatch(setDonationsAsync())
+          return dispatch(setDonationsAsync(access_token))
         }, [dispatch])
       );
 
@@ -98,7 +98,7 @@ export default function HomePage() {
                         iconName = focused  ? 'person-circle-outline' : 'person-circle';
                     } else if (route.name === "Create") {
                         iconName = focused  ? 'create-outline' : 'create-outline';
-                    } else if (route.name === "Donasi Saya") {
+                    } else if (route.name === "My Donations") {
                         iconName = focused  ? 'list-circle-outline' : 'list-circle-outline';
                     }
 
@@ -110,7 +110,7 @@ export default function HomePage() {
                 component={DonationList} 
                 options={{ headerStyle: { backgroundColor: '#3DB2FF' }, headerTitleStyle: { color: 'white' }}} 
             />
-            <Tab.Screen name="Donasi Saya" component={DonasiSaya} options={{ headerStyle: { backgroundColor: '#3DB2FF' }, headerTitleStyle: { color: 'white' }}} />
+            <Tab.Screen name="My Donations" component={DonasiSaya} options={{ headerStyle: { backgroundColor: '#3DB2FF' }, headerTitleStyle: { color: 'white' }}} />
             <Tab.Screen name="Create" component={Create} options={{ headerStyle: { backgroundColor: '#3DB2FF' }, headerTitleStyle: { color: 'white' }}} />
             <Tab.Screen name="Profile" component={Profile} options={{ 
                 headerStyle: { backgroundColor: '#3DB2FF' }, 

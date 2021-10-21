@@ -8,6 +8,8 @@ import axios from "axios";
 
 const MIN_HEIGHT = Platform.OS === 'ios' ? 90 : 55;
 const MAX_HEIGHT = 350;
+const baseUrl = 'http://10.0.2.2:3000'
+// const baseUrl = 'http://192.168.1.12:3000'
 
 export default function DetailPage({ route, navigation }) {
     const itemData = route.params.itemData;
@@ -20,7 +22,7 @@ export default function DetailPage({ route, navigation }) {
 
     function payDonation(id) {
         axios({
-            url: `http://192.168.1.12:3000/transactions/${id}`,
+            url: `${baseUrl}/transactions/${id}`,
             method: 'post',
             headers: { access_token },
             data: { amount }

@@ -1,12 +1,13 @@
 import { SETPAYLOADCREATE, SETDONATIONS, SET_DETAIL_DONATION } from "../actionType"
 import axios from 'axios'
+
 // import { useSelector } from 'react-redux'
 
-// const access_token = useSelector(state => state.access_token);
+
 
 // const baseUrl = "http://192.168.1.12:3000"
-// const baseUrl = 'http://10.0.2.2:3000'
-const baseUrl = 'http://192.168.1.24:3000'
+const baseUrl = 'http://10.0.2.2:3000'
+// const baseUrl = 'http://192.168.1.24:3000'
 
 
 export function setCreate(payload) {
@@ -24,7 +25,7 @@ export function actionCreate(data) {
             url: `${baseUrl}/donations`,
             method: 'post',
             data,
-            headers: { 
+            headers: {
                 access_token,
                 "Content-Type": "multipart/form-data",
             }
@@ -46,12 +47,12 @@ export function setDetailDonation(data) {
     }
 }
 
-export function setDonationsAsync() {//belom seleseai
+export function setDonationsAsync(access_token) {
     return function (dispatch) {
         axios({
             url: `${baseUrl}/donations`,
             method: 'get',
-            // headers: access_token
+            headers: {access_token}
         })
             .then((res) => {
                 dispatch(setDonations(res.data))
@@ -84,7 +85,7 @@ export function editDonation(data, id) {
             url: `${baseUrl}/donations/${id}`,
             method: 'PUT',
             data,
-            headers: { 
+            headers: {
                 access_token,
             }
         })
